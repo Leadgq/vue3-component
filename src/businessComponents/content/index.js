@@ -1,0 +1,1 @@
+export { default as YoContent } from "./content.vue";

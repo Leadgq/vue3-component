@@ -1,0 +1,220 @@
+$padding: 18px 16px;
+
+.base-button {
+    padding: $padding;
+}
+
+.el-button--primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    @extend .base-button;
+
+    &:hover {
+        background-color: var(--primary-color-dark);
+        border-color: var(--primary-color-dark);
+    }
+
+    &:disabled {
+        background-color: var(--primary-color-disabled);
+
+        &:hover {
+            background-color: var(--primary-color-disabled);
+        }
+    }
+
+    &.is-plain {
+        background-color: transparent;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        &:disabled {
+            background-color: transparent;
+            color: var(--primary-color-disabled);
+            border-color: var(--primary-color-disabled);
+
+            &:hover {
+                background-color: transparent;
+                border-color: var(--primary-color-disabled);
+            }
+        }
+
+        &.is-loading {
+            border-color: var(--primary-color-disabled);
+        }
+    }
+
+    &.is-loading {
+        border-color: transparent;
+    }
+}
+
+.el-button--success {
+    @extend .base-button;
+    background-color: var(--success-color);
+
+    &:hover {
+        background-color: var(--success-color-dark);
+    }
+
+    &:disabled {
+        background-color: var(--success-color-disabled);
+
+        &:hover {
+            background-color: var(--success-color-disabled);
+        }
+    }
+
+    &.is-plain {
+        background-color: transparent;
+        color: var(--success-color);
+        border-color: var(--success-color);
+
+        &:hover {
+            background-color: var(--success-color);
+            color: #fff;
+        }
+
+        &:disabled {
+            background-color: transparent;
+            color: var(--success-color-disabled);
+            border-color: var(--success-color-disabled);
+
+            &:hover {
+                background-color: transparent;
+                border-color: var(--success-color-disabled);
+            }
+        }
+
+        &.is-loading {
+            border-color: var(--success-color-disabled);
+        }
+    }
+
+    &.is-loading {
+        border-color: transparent;
+    }
+}
+
+.el-button--danger {
+    @extend .base-button;
+    background-color: var(--danger-color);
+
+    &:hover {
+        background-color: var(--danger-color-dark);
+    }
+
+    &:disabled {
+        background-color: var(--danger-color-disabled);
+
+        &:hover {
+            background-color: var(--danger-color-disabled);
+        }
+    }
+
+    &.is-plain {
+        background-color: transparent;
+        color: var(--danger-color);
+        border-color: var(--danger-color);
+
+        &:hover {
+            background-color: var(--danger-color);
+            color: #fff;
+        }
+
+        &:disabled {
+            background-color: transparent;
+            color: var(--danger-color-disabled);
+            border-color: var(--danger-color-disabled);
+
+            &:hover {
+                background-color: transparent;
+                border-color: var(--danger-color-disabled);
+            }
+        }
+
+        &.is-loading {
+            border-color: var(--danger-color-disabled);
+        }
+    }
+
+    &.is-loading {
+        border-color: transparent;
+    }
+}
+
+.el-button--default {
+    @extend .base-button;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+
+    &:hover {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    &:disabled {
+        border-color: var(--default-disabled-border-color);
+        color: var(--default-disabled-text-color);
+
+        &:hover {
+            border-color: var(--default-disabled-hover-border-color);
+            color: var(--default-disabled-text-color);
+        }
+    }
+
+    &.is-loading {
+        border-color: transparent;
+    }
+}
+
+.el-button--warning {
+    @extend .base-button;
+    background-color: var(--warning-color);
+
+    &:hover {
+        background-color: var(--warning-color-dark);
+    }
+
+    &:disabled {
+        background-color: var(--warning-color-disabled);
+
+        &:hover {
+            background-color: var(--warning-color-disabled);
+        }
+    }
+
+    &.is-plain {
+        background-color: transparent;
+        color: var(--warning-color);
+        border-color: var(--warning-color);
+
+        &:hover {
+            background-color: var(--warning-color);
+            color: #fff;
+        }
+
+        &:disabled {
+            background-color: transparent;
+            color: var(--warning-color-disabled);
+            border-color: var(--warning-color-disabled);
+
+            &:hover {
+                background-color: transparent;
+                border-color: var(--warning-color-disabled);
+            }
+        }
+
+        &.is-loading {
+            border-color: var(--warning-color-disabled);
+        }
+    }
+
+    &.is-loading {
+        border-color: transparent;
+    }
+}

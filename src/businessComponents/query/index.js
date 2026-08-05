@@ -1,0 +1,1 @@
+export { default as YoQuery } from './query.vue'

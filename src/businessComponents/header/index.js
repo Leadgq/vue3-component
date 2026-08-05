@@ -1,0 +1,1 @@
+export { default as YoHeader } from "./header.vue";

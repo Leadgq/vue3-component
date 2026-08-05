@@ -1,0 +1,1 @@
+export { default as YoFileView } from "./fileView.vue";

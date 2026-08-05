@@ -1,0 +1,78 @@
+{
+  "name": "yo-pc-ui-component",
+  "private": false,
+  "version": "0.1.1",
+  "description": "Vue 3 Component Library based on Element Plus with custom styles and logic",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "component-library",
+    "element-plus",
+    "ui",
+    "components"
+  ],
+  "author": "Leadgq",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Leadgq/vue3-component-library"
+  },
+  "homepage": "https://github.com/Leadgq/vue3-component-library#readme",
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@vue-office/docx": "^1.6.3",
+    "@vue-office/excel": "^1.7.14",
+    "@vue-office/pdf": "^2.0.10",
+    "@vue-office/pptx": "^1.0.1",
+    "@vueuse/core": "^14.2.1",
+    "dayjs": "^1.11.20",
+    "element-plus": "^2.13.5",
+    "file-saver": "^2.0.5",
+    "viewerjs": "^1.11.7",
+    "vite-plugin-static-copy": "^3.2.0",
+    "vue": "^3.5.29",
+    "vue-demi": "0.14.6",
+    "vue-i18n": "12.0.0-alpha.3",
+    "xgplayer": "^3.0.24"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.6.4",
+    "vue": "^3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": false
+    },
+    "element-plus": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "sass": "^1.97.3",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

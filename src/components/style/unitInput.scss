@@ -1,0 +1,41 @@
+.yo-unit-input {
+  display: inline-flex;
+  width: 100%;
+  vertical-align: middle;
+
+  :deep(.el-input-group__append) {
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-left: none;
+
+    .el-select {
+      margin: -1px -1px -1px 0;
+
+      .el-select__wrapper {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        background-color: var(--el-fill-color-light);
+        box-shadow: 0 0 0 1px var(--el-border-color) inset;
+
+        &:hover {
+          box-shadow: 0 0 0 1px var(--el-border-color-hover) inset;
+          z-index: 1;
+        }
+
+        &.is-focused {
+          box-shadow: 0 0 0 1px var(--el-color-primary) inset;
+          z-index: 2;
+        }
+      }
+    }
+  }
+
+  &.is-disabled {
+    :deep(.el-input-group__append) {
+      .el-select__wrapper {
+        background-color: var(--el-disabled-bg-color);
+      }
+    }
+  }
+}

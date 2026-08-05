@@ -1,0 +1,1 @@
+export { default as YoTitle } from "./title.vue";

@@ -1,0 +1,147 @@
+// 颜色变量定义
+$colors: (
+  // 主色
+  primary-color: #4d6de6,
+  // 主色
+  primary-color-dark: #2B4DCD,
+  // 主色-暗
+  primary-color-light: #6e80f7,
+  // 主色-亮
+  primary-color-light-2: #8fadfc,
+  // 主色-更亮
+  primary-color-light-3: #acc4fa,
+  // 主色-最亮
+  primary-color-light-4: #c7dafa,
+  // 主色-淡
+  primary-color-light-5: #e6eeff,
+
+  primary-color-disabled: #ADBEFF,
+
+  // 主色-最淡
+  // 成功颜色
+  success-color: #42ba5b,
+  // 成功色
+  success-color-dark: #2a9f47,
+  // 成功色-暗
+  success-color-light: #5dc871,
+  // 成功色-亮
+  success-color-light-2: #7bd689,
+  // 成功色-更亮
+  success-color-light-3: #9ce3a5,
+  // 成功色-最亮
+  success-color-light-4: #c9f0d1,
+  // 成功色-淡
+  success-color-light-5: #e8ffe9,
+
+  success-color-disabled: #ABE7B8,
+
+  // 成功色-最淡
+  // 危险颜色
+  danger-color: #e85050,
+  // 危险色
+  danger-color-dark: #c13237,
+  // 危险色-暗
+  danger-color-light: #f0726d,
+  // 危险色-亮
+  danger-color-light-2: #f5938c,
+  // 危险色-更亮
+  danger-color-light-3: #f6b0a8,
+  // 危险色-最亮
+  danger-color-light-4: #facec8,
+  // 危险色-淡
+  danger-color-light-5: #ffece8,
+
+  danger-color-disabled: #f6c2bd,
+
+  // 危险色-最淡
+  // 警告颜色
+  warning-color: #ed892f,
+  // 警告色
+  warning-color-dark: #c3651d,
+  // 警告色-暗
+  warning-color-light: #f1a152,
+  // 警告色-亮
+  warning-color-light-2: #f4b976,
+  // 警告色-更亮
+  warning-color-light-3: #f8d09b,
+  // 警告色-最亮
+  warning-color-light-4: #fbe4c1,
+  // 警告色-淡
+  warning-color-light-5: #fff7e8,
+
+  warning-color-disabled: #f4c8a2,
+
+  // 警告色-最淡
+  // 灰色颜色
+  gray-color: rgba(78, 90, 106, 1),
+  // 灰色
+  gray-color-dark: rgba(70, 79, 90, 1),
+  // 灰色-暗
+  gray-color-light: rgba(133, 144, 157, 1),
+  // 灰色-亮
+  gray-color-light-2: rgba(227, 229, 234, 1),
+  // 灰色-更亮
+  gray-color-light-3: rgba(237, 239, 242, 1),
+  // 灰色-最亮
+  gray-color-light-4: rgba(245, 246, 247, 1),
+  // 灰色-淡
+  gray-color-light-5: rgba(255, 255, 255, 1),
+  // 灰色-最淡
+  // 中性色
+  neutral-color: #1d212a,
+  // 中性色
+  neutral-color-dark: #272c38,
+  // 中性色-暗
+  neutral-color-light: #4e5a6a,
+  // 中性色-亮
+  neutral-color-light-2: #85909d,
+  // 中性色-更亮
+  neutral-color-light-3: #cacdd7,
+  // 中性色-最亮
+  neutral-color-light-4: #e6e7ea,
+  // 中性色-淡
+  neutral-color-light-5: #f3f4f6,
+
+  // 标题颜色
+  title-color-level-1: #333,
+  title-color-level-2: #4D6DE6,
+  title-color-level-3: #989899,
+
+
+
+  neutral-color-light-input: #BDC1CC,
+
+  default-disabled-text-color: #A0B1F0FF,
+  default-disabled-border-color: #a0b1f0,
+
+  default-disabled-hover-border-color: #447bfd,
+  default-disabled-hover-text-color: #a9b9f3,
+
+
+  default-radio-color:#6B7A99,
+  radio-disabled-color:#CBCFDB,
+
+
+  detail-label-color:"#475166",
+  detail-disabel-input-color:"#F2F3F7",
+  detail-disabel-input-text-color:"#4D4D4D",
+
+
+  table-header-bg:"#F5F7FB",
+  table-header-text-color:"#333333",
+  table-stripe-bg:"#FAFAFA",
+  select-option-hover-bg: #F9FBFF,
+
+  // 字体大小
+  font-size-sm: 12px,
+  font-size-base: 14px,
+  font-size-lg: 16px,
+  font-size-xl: 28px
+);
+
+// 生成全局 CSS 变量
+:root {
+  @each $key, $value in $colors {
+    --#{$key}: #{$value};
+  }
+}

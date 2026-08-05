@@ -1,0 +1,89 @@
+.row_container {
+    width: 100%;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.grid-row {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 0 40px;
+}
+
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0; // Use span-based width calculation
+}
+
+.col_content_box {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    line-height: 1.5;
+    margin-bottom: 18px;
+
+    &.is-underline {
+        .value_w {
+            border-bottom: 1px solid var(--detail-underline-color, #ccc);
+            padding-bottom: 10px;
+        }
+    }
+}
+
+.detail_label {
+    display: inline-block;
+    flex-shrink: 0;
+    margin-right: 12px;
+    color: var(--detail-label-color);
+    font-size: var(--font-size-base);
+    word-break: break-all;
+
+
+    &.align-start {
+        text-align: left;
+    }
+
+    &.align-center {
+        text-align: center;
+    }
+
+    &.align-end {
+        text-align: right;
+    }
+}
+
+.value_w {
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+    /* 允许长内容换行 */
+
+    &.align-start {
+        text-align: left;
+    }
+
+    &.align-center {
+        text-align: center;
+    }
+
+    &.align-end {
+        text-align: right;
+    }
+
+    .el-input {
+        &.is-disabled {
+            .el-input__wrapper {
+                padding-left: 18px;
+                background: var(--detail-disabel-input-color);
+                color: var(--detail-disabel-input-text-color);
+            }
+
+            .el-input__inner {
+                background: var(--detail-disabel-input-color);
+            }
+        }
+    }
+}

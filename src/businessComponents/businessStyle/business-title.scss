@@ -1,0 +1,31 @@
+$line-height-lg: 30px;
+$width: 3px;
+$height: 20px;
+$border-radius: 3px;
+$margin-right: 9px;
+
+.yo-title {
+    font-size: var(--font-size-lg);
+    line-height: $line-height-lg;
+
+    &-level-1 {
+        color: var(--title-color-level-1);
+
+        .title-flag {
+            display: block;
+            width: $width;
+            height: $height;
+            border-radius: $border-radius;
+            background: var(--primary-color);
+            margin-right: $margin-right;
+        }
+    }
+
+    &-level-2 {
+        color: var(--title-color-level-2);
+    }
+
+    &-level-3 {
+        color: var(--title-color-level-3);
+    }
+}

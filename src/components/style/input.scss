@@ -1,0 +1,22 @@
+.el-input {
+    &.el-input--default {
+        height: 38px;
+    }
+
+    .el-input__wrapper {
+        padding-left: 16px;
+
+        .el-input__inner {
+            font-size: var(--font-size-base);
+            // color: var(--neutral-color-light-input);
+        }
+
+        &.is-focus {
+            box-shadow: 0 0 0 1px var(--primary-color) inset;
+        }
+
+        &.el-input--small {
+            padding-left: 12px;
+        }
+    }
+}

@@ -1,0 +1,1 @@
+export { default as YoDetailCol } from "./dtailCol.vue"
