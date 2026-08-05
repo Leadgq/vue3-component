@@ -266,10 +266,21 @@ const formatDefaultFile = (file) => {
   return item
 }
 
+const toIdsString = (ids) => {
+  if (ids == null || ids === '') return ''
+  if (typeof ids === 'string') return ids.split(',').map(id => id.trim()).filter(Boolean).join(',')
+  if (Array.isArray(ids)) return ids.filter(id => id != null && id !== '').join(',')
+  return String(ids)
+}
+
 const handlerDefault = async (ids) => {
   try {
-    const actualIds = typeof ids === 'string' ? ids.split(',').filter(id => id.trim()) : ids
-    const res = await proxy.$http.post(`${finalApiUrl.value}/api/Attach/GetAttachs`, { ids: actualIds })
+    const idsStr = toIdsString(ids)
+    if (!idsStr) {
+      fileList.value = []
+      return
+    }
+    const res = await proxy.$http.post(`${finalApiUrl.value}/api/Attach/GetAttachs`, { ids: idsStr })
     fileList.value = (res || []).map(file => formatDefaultFile(file))
   } catch (error) {
     console.error('YoImg loadData error:', error)

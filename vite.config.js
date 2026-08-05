@@ -27,7 +27,11 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: ['vue'],
+      external: (id) =>
+        id === 'vue' ||
+        id === 'element-plus' ||
+        id.startsWith('element-plus/') ||
+        id.startsWith('@element-plus/'),
       output: {
         globals: {
           vue: 'Vue',

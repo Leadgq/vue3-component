@@ -32,7 +32,8 @@ const props = defineProps({
 .yo-content {
     background-color: #fff;
     padding-top: 17px;
-    padding-bottom: 26px;
+    // padding-bottom: 26px;
+    margin-bottom: 16px;
 
     .title {
         padding-left: 20px;

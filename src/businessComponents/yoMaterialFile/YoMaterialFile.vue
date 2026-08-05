@@ -106,9 +106,8 @@ const handleDownloadTemplate = async (id, index) => {
   if (!id) return
   try {
     const apiPath = `${props.apiUrl || config.attachApi}/api/Attach/GetAttachs`
-    // 即使是单个 ID，接口通常也期望以数组形式发送
-    const ids = Array.isArray(id) ? id : [id]
-    const resp = await proxy.$http.post(apiPath, { ids })
+    const idsStr = Array.isArray(id) ? id.filter(Boolean).join(',') : String(id)
+    const resp = await proxy.$http.post(apiPath, { ids: idsStr })
     if (resp && resp.length > 0) {
       const { id: fileId, sign, timestamp, name } = resp[0]
       const base = props.apiUrl || config.attachApi

@@ -1,4 +1,3 @@
-$height: 38px;
 .search-input {
     .el-input__wrapper {
         padding-left: 10px;
@@ -8,6 +7,5 @@ $height: 38px;
     }
     .el-button{
         font-size: var( --font-size-lg);
-        height: $height;
     }
 }

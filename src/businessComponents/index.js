@@ -7,7 +7,6 @@ import { YoDetailCol } from "./detailCol";
 import { YoTable } from "./table"
 import { YoQuery } from "./query"
 import { YoGrid } from "./grid"
-import { YoForm } from "./form"
 import { YoTree } from "./tree"
 import { YoImg } from "./yoImg"
 import { YoFile } from "./yoFile"
@@ -22,7 +21,6 @@ export {
     YoTable,
     YoQuery,
     YoGrid,
-    YoForm,
     YoTree,
     YoImg,
     YoFile,

@@ -1,21 +1,12 @@
 .yo-select {
     width: 100%;
-
-    .el-select__wrapper {
-        height: 38px;
-
-        &.is-focused {
-            box-shadow: 0 0 0 1px var(--title-color-level-2);
-        }
-    }
 }
 
 .yo-select-dropdown {
-    font-size: var(--font-size-base);
-
     .el-select-dropdown__item {
-        line-height: 38px;
-        height: 38px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &.is-hovering {
             color: #4D6DE6;

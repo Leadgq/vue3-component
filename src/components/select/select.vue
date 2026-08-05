@@ -1,12 +1,13 @@
 <template>
     <div class="yo-select">
         <el-select v-bind="attrs" v-model="modelValue" popper-class="yo-select-dropdown" :loading="loading"
-            @change="handleSelect">
+            fit-input-width style="width: 100%" @change="handleSelect">
             <template v-for="(_, name) in slots" #[name]="slotData">
                 <slot :name="name" v-bind="slotData" />
             </template>
             <template v-if="!slots.default">
-                <el-option v-for="item in localOptions" :key="item.value" :label="item.label" :value="item.value" />
+                <el-option v-for="item in localOptions" :key="item.value" :label="item.label" :value="item.value"
+                    :title="item.label" />
             </template>
         </el-select>
     </div>

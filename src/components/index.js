@@ -12,7 +12,7 @@ import {
   YoTable,
   YoQuery
   , YoGrid,
-  YoForm,
+  // YoForm,
   YoTree,
   YoImg,
   YoFile,
@@ -71,7 +71,7 @@ export const YoDropdownItem = ElementPlus.ElDropdownItem;
 export const YoDropdownMenu = ElementPlus.ElDropdownMenu;
 // export const YoEmpty = ElementPlus.ElEmpty; // 使用本地二开版本
 export const YoFooter = ElementPlus.ElFooter;
-// export const YoForm = ElementPlus.ElForm;
+export const YoForm = ElementPlus.ElForm; // 使用 Element Plus 原版，非 businessComponents/form
 export const YoFormItem = ElementPlus.ElFormItem;
 // export const YoHeader = ElementPlus.ElHeader; // 使用业务组件库版本
 export const YoIcon = ElementPlus.ElIcon;
@@ -164,7 +164,7 @@ export {
   YoTable,
   YoQuery,
   YoGrid,
-  YoForm,
+  // YoForm,
   YoSelect,
   YoUnitInput,
   YoEmpty,
@@ -211,7 +211,6 @@ const components = {
   YoTable,
   YoQuery,
   YoGrid,
-  YoForm,
   YoSelect,
   YoUnitInput,
   YoEmpty,

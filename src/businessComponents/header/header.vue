@@ -63,5 +63,6 @@ function handleClick() {
     padding-left: 20px;
     box-sizing: border-box;
     margin-bottom: 10px;
+    padding-right: 20px;
 }
 </style>

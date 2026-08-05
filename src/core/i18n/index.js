@@ -4,4 +4,4 @@ export {
   en,
   ja,
   ko
-} from 'element-plus/es/locales'
+} from 'element-plus/es/locales.mjs'
