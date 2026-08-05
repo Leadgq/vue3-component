@@ -59,7 +59,7 @@
       </template>
       <template v-else>
         <slot name="trigger">
-          <el-button v-if="!readOnly" :disabled="(fileList.length >= fileLimit) && fileLimit" type="primary"
+          <el-button class="yo-file-upload-btn" v-if="!readOnly" :disabled="(fileList.length >= fileLimit) && fileLimit" type="primary"
             size="small">{{
               uploadBtnName
             }}</el-button>
@@ -816,6 +816,7 @@ const handleDownLoad = (file) => {
 
 
 onMounted(() => {
+  console.log('props.layout', props.layout,'执行')
   const activeIds = (props.ids && props.ids.length) ? props.ids : props.modelValue;
   if (activeIds || props.upType === 'minio') {
     loadData(activeIds)
@@ -1275,6 +1276,9 @@ const itemWidth = computed(() => {
 
 :deep(.el-dialog__body) {
   padding: 0;
+}
+.yo-file-upload-btn {
+    width: fit-content;
 }
 </style>
 
