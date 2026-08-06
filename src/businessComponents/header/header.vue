@@ -6,7 +6,7 @@
                     <slot name="second"></slot>
                 </template>
             </YoTitle>
-            <section class="my-header__action flex align-center">
+            <section class="my-header__action plus-flex align-center">
                 <slot name="action"></slot>
                 <YoButton v-if="isShowBack" @click="handleClick">
                     <el-icon>

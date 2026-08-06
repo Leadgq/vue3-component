@@ -31,7 +31,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { vLoading } from "element-plus"
 import { YoEmpty } from "../../components/empty";
 import { renderCell } from './table.utils.js'
-import { getLibAppKey } from '../../core/appKey.js'
+import { getPageStoragePrefix } from '../../core/appKey.js'
 const proxy = getCurrentInstance().proxy;
 const yoGridContext = inject('yoGridContext', null)
 
@@ -203,7 +203,7 @@ const TableColumn = (colProps) => {
     if (props.showSetting && isSettingColumn(col)) {
         colSlots.header = (scope) => (
             <div
-                class={['flex align-center pointer header-setting-wrap',
+                class={['plus-flex align-center pointer header-setting-wrap',
                     col.align === 'right' ? 'flex-end' : col.align === 'center' ? 'justify-center' : '']}
             >
                 <span>{scope.column.label}</span>
@@ -217,7 +217,7 @@ const TableColumn = (colProps) => {
                             ),
                             default: () => (
                                 <div class="setting-content">
-                                    <div class="flex align-center setting-title">
+                                    <div class="plus-flex align-center setting-title">
                                         <span class="tips">选择列中要展示的信息</span>
                                         <ElIcon class="pointer cursor-pointer" style="margin-left: 8px;" onClick={resetColumns} title="重置列">
                                             <Refresh />
@@ -312,11 +312,10 @@ function useTableColumns(props, emit) {
 
     // 只有外界需要缓存的时候checkBox才进行缓存
     if (props.showSetting) {
-        const appKey = getLibAppKey()
-        const pagePath = window.location.pathname
-        const storageKey = `${appKey}${pagePath}${props.isTabs ? '_' + props.tabsKey : ''}_checkbox`
+        const pagePrefix = getPageStoragePrefix()
+        const storageKey = `${pagePrefix}${props.isTabs ? '_' + props.tabsKey : ''}_checkbox`
         const columnCache = useLocalStorage(storageKey, allKeys.value)
-        const isFirstLoadCacheKey = `${appKey}${pagePath}${props.isTabs ? '_' + props.tabsKey : ''}_first_load`
+        const isFirstLoadCacheKey = `${pagePrefix}${props.isTabs ? '_' + props.tabsKey : ''}_first_load`
         const isFirstLoadCache = useLocalStorage(isFirstLoadCacheKey, true)
         if (isFirstLoadCache.value) {
             visibleKeys.value = [...allKeys.value]

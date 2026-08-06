@@ -23,7 +23,7 @@ import * as ElementPlus from 'element-plus'
 import { initLibAppKey } from '../core/appKey.js'
 import { YO_CONFIG_KEY } from '../core/config.js'
 import { YO_EP_NAMESPACE } from '../core/namespace.js'
-export { getLibAppKey } from '../core/appKey.js'
+export { getLibAppKey, getPageStoragePath, getPageStoragePrefix } from '../core/appKey.js'
 export { YO_EP_NAMESPACE } from '../core/namespace.js'
 
 // --- Generated Static Exports (Aliased from ElementPlus) ---

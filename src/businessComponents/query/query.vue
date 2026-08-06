@@ -1,7 +1,7 @@
 <template>
     <div class="yo-query" :style="gridStyle">
         <YoTitle v-if="title" :content="title" class="title"></YoTitle>
-        <div class="flex search flex-end align-center" :class="{ isActive: isShowSuperSearchArea }">
+        <div class="plus-flex search flex-end align-center" :class="{ isActive: isShowSuperSearchArea }">
             <YoSearch v-model="model[quickSearchKey]" :width="'386px'" placeholder="快速搜索" v-if="!isShowSuperSearchArea"
                 @search="quickSearch"></YoSearch>
             <YoSearch :isSearchModel="false" :direction="isShowSuperSearchArea ? 'up' : 'down'" :button-type="'default'"
@@ -18,7 +18,7 @@
                     </el-icon>
                 </template>
                 <div class="setting-content">
-                    <div class="flex align-center setting-title">
+                    <div class="plus-flex align-center setting-title">
                         <span class="tips">选择想要展示的筛选信息</span>
                         <el-icon class="pointer cursor-pointer" style="margin-left: 8px;" @click="resetFields"
                             title="重置">
@@ -43,7 +43,7 @@
                     :label-width="item.labelWidth" :style="{
                         gridColumn: `span ${item.span || 1}`,
                         '--query-label-gap': item.space ? (typeof item.space === 'number' ? `${item.space}px` : item.space) : '12px'
-                    }" class="flex align-center ">
+                    }" class="plus-flex align-center ">
                     <!-- 1. 插槽支持 (最高优先级) -->
                     <slot v-if="item.isSlot" :name="item.prop" :item="item" :model="model"></slot>
                     <!-- 2.嵌套渲染 -->
@@ -67,7 +67,7 @@
         </el-form>
 
         <!-- 确认和重置 -->
-        <div class="flex align-center footer" :class="{
+        <div class="plus-flex align-center footer" :class="{
             'flex-end': btnPostion === 'end',
             'flex-start': btnPostion === 'start',
             'justify-center': btnPostion === 'center'
@@ -149,6 +149,11 @@ const props = defineProps({
     labelPosition: {
         type: String,
         default: 'left'
+    },
+    // 是否缓存查询条件 / 展开状态 / 字段显隐
+    isCache: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -172,7 +177,7 @@ const handlerShowSuperSearch = () => {
     // 递归去取子项里面的值，包括跨列的组件,但必须是可见的
     collectProps(visibleConfig.value)
     Object.keys(props.model).forEach(key => {
-        if (activePropSet.has(key) && key !== props.quickSearchKey) {
+          if (activePropSet.has(key)) {
             result[key] = props.model[key]
         }
     })

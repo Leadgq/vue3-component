@@ -1,6 +1,6 @@
 <template>
-    <div class="yo-title flex align-center">
-        <div class="yo-title flex align-center" :class="`yo-title-level-${level}`">
+    <div class="yo-title plus-flex align-center">
+        <div class="yo-title plus-flex align-center" :class="`yo-title-level-${level}`">
             <span class="title-flag"></span>
             {{ content }}
         </div>

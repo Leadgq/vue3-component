@@ -9,6 +9,9 @@
                 </template>
             </YoQuery>
             <div class="layout-container">
+                <div class="yo-grid-toolbar" v-if="slots.toolbar">
+                    <slot name="toolbar"></slot>
+                </div>
                 <div class="yo-grid-tabs" v-if="tabsProps.prop && tabsProps.config.length > 0">
                     <ElTabs v-model="activeTab" @tab-change="handleTabChange">
                         <ElTabPane v-for="item in tabsProps.config" :key="item.value" :label="item.label"
@@ -34,7 +37,7 @@ import { useLocalStorage } from "@vueuse/core"
 import { YoQuery } from "../query"
 import { YoTable } from "../table"
 import { ElTabs, ElTabPane } from "element-plus"
-import { getLibAppKey } from '../../core/appKey.js'
+import { getPageStoragePrefix } from '../../core/appKey.js'
 
 const emit = defineEmits(["column-change", "search", "reload", "quick-search", "page-change", "size-change", "tabs-change"])
 provide('yoGridContext', { isInsideGrid: true })
@@ -122,9 +125,7 @@ const tabsProps = computed(() => {
 const activeTab = ref("")
 
 if (tabsProps.value.prop) {
-    const appKey = getLibAppKey()
-    const pagePath = window.location.pathname
-    const tabCache = useLocalStorage(`${appKey}${pagePath}_active_tab`, tabsProps.value.default || tabsProps.value.config[0]?.value || "")
+    const tabCache = useLocalStorage(`${getPageStoragePrefix()}_active_tab`, tabsProps.value.default || tabsProps.value.config[0]?.value || "")
     activeTab.value = tabCache.value
     watch(activeTab, (newVal) => {
         emit("tabs-change", newVal)
@@ -346,6 +347,13 @@ defineExpose({
 .layout-container {
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.yo-grid-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 12px;
 }
 
 .yo-grid-tabs {

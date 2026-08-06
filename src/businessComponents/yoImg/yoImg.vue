@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, getCurrentInstance } from 'vue'
+import { ref, watch, computed, getCurrentInstance } from 'vue'
 import { ElImage, ElIcon, ElLink, ElDialog } from 'element-plus'
 import { Picture, Warning, CaretRight } from '@element-plus/icons-vue'
 import Player from "xgplayer"
@@ -354,9 +354,13 @@ const handleDownLoad = (file) => {
 }
 
 
-onMounted(() => {
-  loadData(props.ids)
-})
+watch(
+  () => props.ids,
+  (ids) => {
+    loadData(ids)
+  },
+  { immediate: true, deep: true }
+)
 
 defineExpose({
   hanlderPreveFileList

@@ -3,7 +3,7 @@
     :class="{
       'is-vertical': layout === 'vertical' && uploadType !== 1,
       'is-inline': layout === 'inline' && uploadType !== 1,
-      flex: uploadType === 1,
+      'plus-flex': uploadType === 1,
       'flex-wrap': uploadType === 1
     }">
     <!-- uploadType === 1 图片列表 -->
