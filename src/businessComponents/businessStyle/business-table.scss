@@ -6,7 +6,7 @@
         justify-content: flex-end;
         margin-top: 22px;
 
-        .el-pager {
+        .ep-pager {
             gap: 8px;
 
             li {
@@ -55,7 +55,7 @@
         }
     }
 
-    .el-table thead th.el-table__cell {
+    .ep-table thead th.ep-table__cell {
         background-color: var(--table-header-bg);
         height: 54px;
         color: var(--table-header-text-color);
@@ -63,16 +63,16 @@
     }
 
     // 斑马线颜色（stripe 为 true 时生效）
-    .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+    .ep-table--striped .ep-table__body tr.ep-table__row--striped td.ep-table__cell {
         background-color: var(--table-stripe-bg);
     }
 
-    .el-table__body td.el-table__cell {
+    .ep-table__body td.ep-table__cell {
         height: 46px;
     }
 
     // 行 hover 颜色
-    .el-table__body tr:hover td.el-table__cell {
+    .ep-table__body tr:hover td.ep-table__cell {
         background-color: var(--table-header-bg);
     }
 }

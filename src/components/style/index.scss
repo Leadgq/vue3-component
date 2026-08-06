@@ -1,11 +1,13 @@
+// namespace=ep 由 vite additionalData 注入；此处引入 EP 源码主题打进 dist
+// （勿用 element-plus/dist/index.css，否则 namespace 不生效）
+@use 'element-plus/theme-chalk/src/index.scss' as *;
+
 @use './theme' as *;
 @use "./button" as *;
 @use './input' as *;
-@use './search' as *;
 @use './radio' as *;
 @use './select' as *;
 @use './unitInput' as *;
 @use "../../businessComponents/businessStyle/index.scss" as *;
 @use './common.scss' as *;
 @use './date.scss' as *;
-@import "element-plus/dist/index.css";

@@ -73,15 +73,15 @@
         text-align: right;
     }
 
-    .el-input {
+    .ep-input {
         &.is-disabled {
-            .el-input__wrapper {
+            .ep-input__wrapper {
                 padding-left: 18px;
                 background: var(--detail-disabel-input-color);
                 color: var(--detail-disabel-input-text-color);
             }
 
-            .el-input__inner {
+            .ep-input__inner {
                 background: var(--detail-disabel-input-color);
             }
         }

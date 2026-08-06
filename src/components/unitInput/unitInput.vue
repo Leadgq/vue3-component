@@ -150,22 +150,22 @@ watchEffect(async () => {
   width: 100%;
 
   /* Vue 3 推荐的深度选择器语法是 :deep(selector) */
-  :deep(.el-input-group__append) {
+  :deep(.ep-input-group__append) {
     background-color: transparent;
     border: none;
     padding-bottom: 1px;
     padding-top: 1px;
   }
 
-  /* 针对 Element Plus 不同版本的兼容写法 (el-input__wrapper 或 el-select__wrapper) */
-  :deep(.unit-select-inner .el-select__wrapper),
-  :deep(.unit-select-inner .el-input__wrapper) {
+  /* 针对 Element Plus 不同版本的兼容写法 (el-input__wrapper 或 ep-select__wrapper) */
+  :deep(.unit-select-inner .ep-select__wrapper),
+  :deep(.unit-select-inner .ep-input__wrapper) {
     box-shadow: none !important;
     background-color: transparent !important;
     border: none !important;
   }
 
-  :deep(.unit-select-inner .el-input__inner) {
+  :deep(.unit-select-inner .ep-input__inner) {
     text-align: center;
   }
 

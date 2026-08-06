@@ -4,7 +4,7 @@ $padding: 18px 16px;
     padding: $padding;
 }
 
-.el-button--primary {
+.ep-button--primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
     @extend .base-button;
@@ -53,7 +53,7 @@ $padding: 18px 16px;
     }
 }
 
-.el-button--success {
+.ep-button--success {
     @extend .base-button;
     background-color: var(--success-color);
 
@@ -100,7 +100,7 @@ $padding: 18px 16px;
     }
 }
 
-.el-button--danger {
+.ep-button--danger {
     @extend .base-button;
     background-color: var(--danger-color);
 
@@ -147,7 +147,7 @@ $padding: 18px 16px;
     }
 }
 
-.el-button--default {
+.ep-button--default {
     @extend .base-button;
     border-color: var(--primary-color);
     color: var(--primary-color);
@@ -172,7 +172,7 @@ $padding: 18px 16px;
     }
 }
 
-.el-button--warning {
+.ep-button--warning {
     @extend .base-button;
     background-color: var(--warning-color);
 

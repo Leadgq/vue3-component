@@ -17,8 +17,8 @@
         </el-table>
         <div class="yo-table-pagination" v-if="isShowPagination">
             <el-pagination v-model:current-page="innerPagination.pageNum" v-model:page-size="innerPagination.pageSize"
-                :page-sizes="paginSize" :total="innerPagination.total" :layout="layout"
-                @current-change="handlePageChange" @size-change="handleSizeChange" />
+                :page-sizes="paginSize" :total="innerPagination.total" :layout="layout" append-size-to="body"
+                @current-change="handlePageChange" @size-change="handleSizeChange"  popper-class="my-pagination-popper"/>
         </div>
     </div>
 </template>
@@ -164,7 +164,7 @@ const props = defineProps({
 
 const tableAttrs = computed(() => attrs)
 
-// 需要从列配置中剔除的自定义字段，避免透传给 el-table-column 产生警告
+// 需要从列配置中剔除的自定义字段，避免透传给 ep-table-column 产生警告
 const STRIP_KEYS = ['render', 'dateFormat', 'format', 'isSlot', 'children']
 
 
@@ -382,7 +382,7 @@ function computeMergeSpans(data, mergeBy, rowKey) {
     return spanMap
 }
 
-// 最终传给 el-table 的 span-method
+// 最终传给 ep-table 的 span-method
 const resolvedSpanMethod = computed(() => {
     // 手动模式优先
     if (props.spanMethod) return props.spanMethod
@@ -545,8 +545,8 @@ defineExpose({
     width: 100%;
     background-color: #fff;
 
-    .el-table {
-        --el-table-text-color: #475166;
+    .ep-table {
+        --ep-table-text-color: #475166;
     }
 }
 

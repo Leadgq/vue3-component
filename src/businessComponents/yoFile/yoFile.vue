@@ -8,26 +8,26 @@
     }">
     <!-- uploadType === 1 图片列表 -->
     <ul v-if="uploadType === 1 && fileList.length > 0"
-      class="el-upload-list el-upload-list--picture-card yo-custom-picture-list">
-      <li v-for="file in fileList" :key="file.id || file.uid" class="el-upload-list__item is-success"
+      class="ep-upload-list ep-upload-list--picture-card yo-custom-picture-list">
+      <li v-for="file in fileList" :key="file.id || file.uid" class="ep-upload-list__item is-success"
         :style="{ width: props.width, height: props.height }">
-        <img v-if="isImgType(file.type)" class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+        <img v-if="isImgType(file.type)" class="ep-upload-list__item-thumbnail" :src="file.url" alt="" />
         <div v-else class="non-image-thumbnail">
           <img class="grid-file-icon" :src="getFileIcon(file)" alt="icon" />
           <span class="grid-file-name" :title="file.name">{{ file.name }}</span>
         </div>
-        <span class="el-upload-list__item-actions">
-          <span class="el-upload-list__item-preview" @click.stop="handlePreview(file)">
+        <span class="ep-upload-list__item-actions">
+          <span class="ep-upload-list__item-preview" @click.stop="handlePreview(file)">
             <el-icon>
               <ZoomIn />
             </el-icon>
           </span>
-          <span class="el-upload-list__item-delete" @click.stop="handleDownLoad(file)">
+          <span class="ep-upload-list__item-delete" @click.stop="handleDownLoad(file)">
             <el-icon>
               <Download />
             </el-icon>
           </span>
-          <span v-if="!readOnly" class="el-upload-list__item-delete" @click.stop="handleRemove(file)">
+          <span v-if="!readOnly" class="ep-upload-list__item-delete" @click.stop="handleRemove(file)">
             <el-icon>
               <Delete />
             </el-icon>
@@ -839,7 +839,7 @@ const itemWidth = computed(() => {
 .yo-file {
   width: 100%;
 
-  .el-upload-list--picture-card {
+  .ep-upload-list--picture-card {
     flex-wrap: nowrap;
   }
 
@@ -989,11 +989,11 @@ const itemWidth = computed(() => {
   margin: 0;
   padding: 0;
 
-  .el-upload-list__item {
+  .ep-upload-list__item {
     flex: none;
   }
 
-  .el-upload-list__item-thumbnail {
+  .ep-upload-list__item-thumbnail {
     object-fit: cover;
   }
 }
@@ -1004,7 +1004,7 @@ const itemWidth = computed(() => {
   flex: none !important;
 }
 
-.avatar-uploader :deep(.el-upload) {
+.avatar-uploader :deep(.ep-upload) {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
@@ -1013,11 +1013,11 @@ const itemWidth = computed(() => {
   transition: border-color 0.3s;
 }
 
-.avatar-uploader :deep(.el-upload):hover {
+.avatar-uploader :deep(.ep-upload):hover {
   border-color: #409eff;
 }
 
-.yo-file-uploader.avatar-uploader :deep(.el-upload) {
+.yo-file-uploader.avatar-uploader :deep(.ep-upload) {
   width: 100%;
   height: 100%;
 }
@@ -1224,18 +1224,18 @@ const itemWidth = computed(() => {
   color: #909399;
 }
 
-.yo-file-uploader:not(.avatar-uploader) :deep(.el-upload) {
+.yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload) {
   display: block;
 }
 
-.yo-file-uploader:not(.avatar-uploader) :deep(.el-upload-dragger) {
+.yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload-dragger) {
   padding: 30px 0;
   background-color: #F8F9FA;
   border: 1px dashed #DCDFE6;
   border-radius: 4px;
 }
 
-.yo-file-uploader:not(.avatar-uploader) :deep(.el-upload-dragger:hover) {
+.yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload-dragger:hover) {
   border-color: #409EFF;
   background-color: #F0F7FF;
 }
@@ -1274,7 +1274,7 @@ const itemWidth = computed(() => {
   overflow: hidden;
 }
 
-:deep(.el-dialog__body) {
+:deep(.ep-dialog__body) {
   padding: 0;
 }
 .yo-file-upload-btn {
@@ -1283,14 +1283,14 @@ const itemWidth = computed(() => {
 </style>
 
 <style lang="scss">
-/* 配合 layout="inline" 使用，加在 el-form-item 上 */
+/* 配合 layout="inline" 使用，加在 ep-form-item 上 */
 .yo-file-inline-item {
-  .el-form-item__label {
+  .ep-form-item__label {
     width: auto !important;
     padding-right: 8px;
   }
 
-  .el-form-item__content {
+  .ep-form-item__content {
     margin-left: 0 !important;
     flex: 1;
     min-width: 0;

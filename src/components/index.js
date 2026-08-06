@@ -22,7 +22,9 @@ import "./style/index.scss";
 import * as ElementPlus from 'element-plus'
 import { initLibAppKey } from '../core/appKey.js'
 import { YO_CONFIG_KEY } from '../core/config.js'
+import { YO_EP_NAMESPACE } from '../core/namespace.js'
 export { getLibAppKey } from '../core/appKey.js'
+export { YO_EP_NAMESPACE } from '../core/namespace.js'
 
 // --- Generated Static Exports (Aliased from ElementPlus) ---
 export const YoAffix = ElementPlus.ElAffix;
@@ -237,11 +239,11 @@ export default {
       app.component(name, component);
     });
 
-    if (options.locale) {
-      app.use(ElementPlus, {
-        locale: options.locale, // 传入语言包
-      })
-    }
+    // namespace 必须与 styles/element/index.scss 的 $namespace 一致
+    app.use(ElementPlus, {
+      locale: options.locale,
+      namespace: options.namespace || YO_EP_NAMESPACE,
+    })
   }
 };
 

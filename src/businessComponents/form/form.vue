@@ -259,23 +259,23 @@ defineExpose({
     width: 100%;
 }
 
-:deep(.el-form-item) {
+:deep(.ep-form-item) {
     margin-bottom: 0px !important;
     margin-right: 0px !important;
     display: flex;
     align-items: center;
 
-    .el-form-item__label {
+    .ep-form-item__label {
         padding-right: var(--form-label-gap, 12px) !important;
         color: #6a7998;
     }
 
-    .el-form-item__label-wrap {
+    .ep-form-item__label-wrap {
         margin-left: 0 !important;
     }
 }
 
-:deep(.el-form-item__content) {
+:deep(.ep-form-item__content) {
     display: flex;
     align-items: center;
 }

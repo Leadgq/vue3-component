@@ -1,0 +1,4 @@
+// Element Plus 自定义命名空间（与主应用 Element UI 的 .el-* 隔离）
+@forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+  $namespace: 'ep'
+);

@@ -351,14 +351,14 @@ defineExpose({
 .yo-grid-tabs {
     margin-bottom: 20px;
 
-    :deep(.el-tabs__nav-wrap) {
+    :deep(.ep-tabs__nav-wrap) {
         &:after {
             height: 1px;
         }
     }
 }
 
-:deep(.el-tabs__header) {
+:deep(.ep-tabs__header) {
     margin-bottom: 0;
 }
 </style>

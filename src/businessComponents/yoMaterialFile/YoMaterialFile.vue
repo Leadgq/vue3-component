@@ -269,15 +269,15 @@ onMounted(() => {
         display: flex;
         gap: 16px;
 
-        .el-link {
+        .ep-link {
           font-size: 13px;
           font-weight: normal;
 
-          &.el-link--success {
+          &.ep-link--success {
             color: #67c23a;
           }
 
-          &.el-link--primary {
+          &.ep-link--primary {
             color: #409eff;
           }
 
@@ -300,7 +300,7 @@ onMounted(() => {
       }
     }
 
-    .el-upload {
+    .ep-upload {
       margin-bottom: 0;
     }
   }

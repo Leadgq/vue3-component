@@ -1,5 +1,5 @@
 <template>
-  <div class="yo-img">
+  <div class="yo-img-plus">
     <!-- 列表模式 -->
     <template v-if="fileList.length > 0 && type === 1">
       <div v-for="file in fileList" :key="file.id" class="yo-file-item" @click.stop="handlePreview(file)">
@@ -364,7 +364,7 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-.yo-img {
+.yo-img-plus {
   width: 100%;
 }
 
@@ -504,7 +504,7 @@ defineExpose({
   font-size: 20px;
 }
 
-:deep(.el-dialog__body) {
+:deep(.ep-dialog__body) {
   padding: 0;
 }
 </style>

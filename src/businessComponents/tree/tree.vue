@@ -260,10 +260,10 @@ defineExpose({
         align-items: center;
         gap: 12px;
 
-        .el-input {
+        .ep-input {
             flex: 1;
 
-            :deep(.el-input__wrapper) {
+            :deep(.ep-input__wrapper) {
                 background-color: #f5f7fa;
                 box-shadow: none !important;
                 border: 1px solid transparent;
@@ -272,7 +272,7 @@ defineExpose({
 
                 &.is-focus {
                     background-color: #fff;
-                    border-color: var(--el-color-primary);
+                    border-color: var(--ep-color-primary);
                 }
             }
         }
@@ -291,7 +291,7 @@ defineExpose({
                 transition: all 0.2s;
 
                 &:hover {
-                    color: var(--el-color-primary);
+                    color: var(--ep-color-primary);
                     background-color: #ecf5ff;
                 }
             }
@@ -345,10 +345,10 @@ defineExpose({
             background: transparent;
         }
 
-        :deep(.el-tree) {
-            --el-tree-node-hover-bg-color: #f5f7fa;
+        :deep(.ep-tree) {
+            --ep-tree-node-hover-bg-color: #f5f7fa;
 
-            .el-tree-node__content {
+            .ep-tree-node__content {
                 height: 38px;
                 border-radius: 4px;
                 margin: 2px 0;
@@ -361,9 +361,9 @@ defineExpose({
                 }
             }
 
-            .el-tree-node.is-current>.el-tree-node__content {
+            .ep-tree-node.is-current>.ep-tree-node__content {
                 background-color: #ecf5ff;
-                color: var(--el-color-primary);
+                color: var(--ep-color-primary);
                 font-weight: 600;
             }
         }
@@ -385,7 +385,7 @@ defineExpose({
             white-space: nowrap;
 
             &.is-highlight {
-                color: var(--el-color-primary);
+                color: var(--ep-color-primary);
                 background-color: #fff8e6;
                 padding: 0 2px;
                 border-radius: 2px;
