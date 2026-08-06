@@ -366,9 +366,7 @@ defineExpose({
 <style scoped lang="scss">
 .yo-img-plus {
   width: 100%;
-}
-
-.yo-file-item {
+  .yo-file-item {
   display: flex;
   align-items: center;
   padding: 8px 12px;
@@ -506,5 +504,6 @@ defineExpose({
 
 :deep(.ep-dialog__body) {
   padding: 0;
+}
 }
 </style>

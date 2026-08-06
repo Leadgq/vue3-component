@@ -4,14 +4,32 @@ $padding: 18px 16px;
     padding: $padding;
 }
 
+/*
+ * 抵御其它微应用残留的全局样式（如 vuetify.min.css）:
+ *   button, [type=button] { color: inherit }
+ * 与单类名同优先级时后加载会把文字刷成黑色 → 用双类名抬高优先级。
+ */
+.ep-button.ep-button--primary,
+.ep-button.ep-button--success,
+.ep-button.ep-button--danger,
+.ep-button.ep-button--warning {
+    color: #fff;
+}
+
+.ep-button.ep-button--default {
+    color: var(--primary-color);
+}
+
 .ep-button--primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+    color: #fff;
     @extend .base-button;
 
     &:hover {
         background-color: var(--primary-color-dark);
         border-color: var(--primary-color-dark);
+        color: #fff;
     }
 
     &:disabled {
@@ -56,9 +74,11 @@ $padding: 18px 16px;
 .ep-button--success {
     @extend .base-button;
     background-color: var(--success-color);
+    color: #fff;
 
     &:hover {
         background-color: var(--success-color-dark);
+        color: #fff;
     }
 
     &:disabled {
@@ -103,9 +123,11 @@ $padding: 18px 16px;
 .ep-button--danger {
     @extend .base-button;
     background-color: var(--danger-color);
+    color: #fff;
 
     &:hover {
         background-color: var(--danger-color-dark);
+        color: #fff;
     }
 
     &:disabled {
@@ -175,9 +197,11 @@ $padding: 18px 16px;
 .ep-button--warning {
     @extend .base-button;
     background-color: var(--warning-color);
+    color: #fff;
 
     &:hover {
         background-color: var(--warning-color-dark);
+        color: #fff;
     }
 
     &:disabled {
