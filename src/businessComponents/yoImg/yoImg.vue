@@ -373,8 +373,7 @@ defineExpose({
   .yo-file-item {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
-  height: 36px;
+  padding: 10px 12px;
   background-color: #f0f2f5;
   border-radius: 4px;
   margin-bottom: 8px;
