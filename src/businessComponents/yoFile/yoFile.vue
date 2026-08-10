@@ -1014,7 +1014,7 @@ const itemWidth = computed(() => {
 }
 
 .avatar-uploader :deep(.ep-upload):hover {
-  border-color: #409eff;
+  border-color: var(--primary-color);
 }
 
 .yo-file-uploader.avatar-uploader :deep(.ep-upload) {
@@ -1127,7 +1127,7 @@ const itemWidth = computed(() => {
 .header-indicator {
   width: 3px;
   height: 14px;
-  background-color: #409EFF;
+  background-color: var(--primary-color);
   margin-right: 6px;
 }
 
@@ -1191,7 +1191,7 @@ const itemWidth = computed(() => {
 }
 
 .file-name-container:hover .row-file-name {
-  color: #409EFF;
+  color: var(--primary-color);
 }
 
 .row-file-icon {
@@ -1236,7 +1236,7 @@ const itemWidth = computed(() => {
 }
 
 .yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload-dragger:hover) {
-  border-color: #409EFF;
+  border-color: var(--primary-color);
   background-color: #F0F7FF;
 }
 

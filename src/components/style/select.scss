@@ -9,11 +9,11 @@
         white-space: nowrap;
 
         &.is-hovering {
-            color: #4D6DE6;
+            color: var(--primary-color);
         }
 
         &.is-selected {
-            color: #4D6DE6;
+            color: var(--primary-color);
         }
     }
 }

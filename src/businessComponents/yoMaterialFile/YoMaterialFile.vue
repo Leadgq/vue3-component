@@ -201,7 +201,7 @@ onMounted(() => {
         padding: 0;
         height: auto;
         font-size: 12px;
-        color: #409eff;
+        color: var(--primary-color);
         justify-content: flex-start;
         border: none;
       }
@@ -274,11 +274,11 @@ onMounted(() => {
           font-weight: normal;
 
           &.ep-link--success {
-            color: #67c23a;
+            color: var(--success-color);
           }
 
           &.ep-link--primary {
-            color: #409eff;
+            color: var(--primary-color);
           }
 
           &::before {

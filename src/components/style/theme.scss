@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // 颜色变量定义
 $colors: (
   // 主色
@@ -118,18 +120,18 @@ $colors: (
   default-disabled-hover-text-color: #a9b9f3,
 
 
-  default-radio-color:#6B7A99,
-  radio-disabled-color:#CBCFDB,
+  default-radio-color: #6B7A99,
+  radio-disabled-color: #CBCFDB,
 
 
-  detail-label-color:"#475166",
-  detail-disabel-input-color:"#F2F3F7",
-  detail-disabel-input-text-color:"#4D4D4D",
+  detail-label-color: #475166,
+  detail-disabel-input-color: #F2F3F7,
+  detail-disabel-input-text-color: #4D4D4D,
 
 
-  table-header-bg:"#F5F7FB",
-  table-header-text-color:"#333333",
-  table-stripe-bg:"#FAFAFA",
+  table-header-bg: #F5F7FB,
+  table-header-text-color: #333333,
+  table-stripe-bg: #FAFAFA,
   select-option-hover-bg: #F9FBFF,
 
   // 字体大小
@@ -139,9 +141,42 @@ $colors: (
   font-size-xl: 28px
 );
 
-// 生成全局 CSS 变量
+// 生成全局 CSS 变量，并同步到 Element Plus（namespace=ep）
 :root {
   @each $key, $value in $colors {
     --#{$key}: #{$value};
   }
+
+  // Element Plus 主题色 ← 自定义色板（避免仍用默认 #409eff）
+  --ep-color-primary: #{map.get($colors, primary-color)};
+  --ep-color-primary-dark-2: #{map.get($colors, primary-color-dark)};
+  --ep-color-primary-light-3: #{map.get($colors, primary-color-light)};
+  --ep-color-primary-light-5: #{map.get($colors, primary-color-light-2)};
+  --ep-color-primary-light-7: #{map.get($colors, primary-color-light-3)};
+  --ep-color-primary-light-8: #{map.get($colors, primary-color-light-4)};
+  --ep-color-primary-light-9: #{map.get($colors, primary-color-light-5)};
+
+  --ep-color-success: #{map.get($colors, success-color)};
+  --ep-color-success-dark-2: #{map.get($colors, success-color-dark)};
+  --ep-color-success-light-3: #{map.get($colors, success-color-light)};
+  --ep-color-success-light-5: #{map.get($colors, success-color-light-2)};
+  --ep-color-success-light-7: #{map.get($colors, success-color-light-3)};
+  --ep-color-success-light-8: #{map.get($colors, success-color-light-4)};
+  --ep-color-success-light-9: #{map.get($colors, success-color-light-5)};
+
+  --ep-color-warning: #{map.get($colors, warning-color)};
+  --ep-color-warning-dark-2: #{map.get($colors, warning-color-dark)};
+  --ep-color-warning-light-3: #{map.get($colors, warning-color-light)};
+  --ep-color-warning-light-5: #{map.get($colors, warning-color-light-2)};
+  --ep-color-warning-light-7: #{map.get($colors, warning-color-light-3)};
+  --ep-color-warning-light-8: #{map.get($colors, warning-color-light-4)};
+  --ep-color-warning-light-9: #{map.get($colors, warning-color-light-5)};
+
+  --ep-color-danger: #{map.get($colors, danger-color)};
+  --ep-color-danger-dark-2: #{map.get($colors, danger-color-dark)};
+  --ep-color-danger-light-3: #{map.get($colors, danger-color-light)};
+  --ep-color-danger-light-5: #{map.get($colors, danger-color-light-2)};
+  --ep-color-danger-light-7: #{map.get($colors, danger-color-light-3)};
+  --ep-color-danger-light-8: #{map.get($colors, danger-color-light-4)};
+  --ep-color-danger-light-9: #{map.get($colors, danger-color-light-5)};
 }
