@@ -2,7 +2,7 @@
 // （勿用 element-plus/dist/index.css，否则 namespace 不生效）
 @use 'element-plus/theme-chalk/src/index.scss' as *;
 
-@use './theme' as *;
+@use '../../themes/theme.scss' as *;
 @use "./button" as *;
 @use './input' as *;
 @use './radio' as *;

@@ -10,5 +10,7 @@ export * from "./core";
 export * from "./businessComponents";
 // 导出基础组件
 export * from "./components/index";
+// 导出主题 API
+export { getTheme, setTheme, getCurrentTheme } from "./themes";
 // 导出默认值
 export default componentLibrary;

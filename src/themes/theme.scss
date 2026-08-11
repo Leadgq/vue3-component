@@ -1,5 +1,7 @@
 @use 'sass:map';
 
+// 默认主题落地（defaultBlue）
+// 运行时切换请用 setTheme('defaultBlue' | ...)，只覆盖主色相关 CSS 变量
 // 颜色变量定义
 $colors: (
   // 主色
