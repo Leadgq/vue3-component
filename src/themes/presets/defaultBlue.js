@@ -17,7 +17,7 @@ export default {
     'primary-color-disabled': '#ADBEFF',
     'title-color-level-2': '#4D6DE6',
     'title-color-level-3': '#989899',
-    "title-color-level-1": "#333",
+    'title-color-level-1': '#333',
     // Element Plus
     'ep-color-primary': '#4d6de6',
     'ep-color-primary-dark-2': '#2B4DCD',
