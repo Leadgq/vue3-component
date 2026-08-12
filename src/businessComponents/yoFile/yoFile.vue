@@ -141,9 +141,9 @@
           </div>
 
           <div class="file-actions">
-            <el-link v-if="canPreview(file)" type="success" :underline="false"
+              <el-link v-if="canPreview(file)" type="success" :underline="false"
               @click.stop="handlePreview(file)">预览</el-link>
-            <el-link v-if="file.type === 'video/mp4'" type="success" :underline="false"
+            <el-link v-if="isVideoFile(file)" type="success" :underline="false"
               @click="playVideo(file)">播放</el-link>
             <el-link type="primary" :underline="false" @click.stop="handleDownLoad(file)">下载</el-link>
             <el-link v-if="!readOnly" type="danger" :underline="false" @click.stop="handleRemove(file)">删除</el-link>
@@ -508,6 +508,19 @@ const isImgType = (filetype) => {
   return ctypeArr.includes(filetype)
 }
 
+const getFileExt = (file) => {
+  const name = file?.name || file?.ItemName || file?.filepath || file?.Path || ''
+  if (!name || !name.includes('.')) return ''
+  return name.split('.').pop().toLowerCase()
+}
+
+/** MIME 或扩展名判断视频（后端 ContentType 常为空 / 不规范） */
+const isVideoFile = (file) => {
+  const type = (file?.type || '').toLowerCase()
+  if (type.startsWith('video/')) return true
+  return ['mp4', 'avi', 'rmvb', 'rm', 'flv', 'wmv', 'mkv', 'webm', 'mov'].includes(getFileExt(file))
+}
+
 //  === 可以播放类型 ===
 const canPreview = (file) => {
   const previewTypes = [
@@ -747,6 +760,8 @@ const handlerMinIo = async () => {
           item.type = 'application/vnd.ms-excel'
         } else if (['ppt', 'pptx'].includes(ext)) {
           item.type = 'application/vnd.ms-powerpoint'
+        } else if (['mp4', 'webm', 'mov', 'avi', 'mkv', 'flv', 'wmv'].includes(ext)) {
+          item.type = ext === 'mp4' ? 'video/mp4' : `video/${ext}`
         }
       }
       let urlPath = file.Path || file.filepath || ''
@@ -793,7 +808,7 @@ const imageList = computed(() => {
 
 // 预览组件
 const handlePreview = (file) => {
-  if (file.type === 'video/mp4') {
+  if (isVideoFile(file)) {
     playVideo(file)
     return
   }
