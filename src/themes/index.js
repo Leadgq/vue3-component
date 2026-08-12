@@ -1,4 +1,5 @@
 import { themePresets } from './presets'
+import { buildPrimaryVars } from './color'
 
 let currentThemeValue = 'defaultBlue'
 const DEFAULT_THEME_VALUE = 'defaultBlue'
@@ -6,27 +7,15 @@ const DEFAULT_THEME_VALUE = 'defaultBlue'
 /**
  * 获取所有可选主题
  * @returns {{ name: string, value: string }[]}
- *
- * @example
- * import { getTheme } from 'yo-pc-ui-component'
- * const themeList = getTheme()
- * // [{ name: '默认蓝', value: 'defaultBlue' }, ...]
  */
 export function getTheme() {
   return themePresets.map(({ name, value }) => ({ name, value }))
 }
 
 /**
- * 按主题 value 切换：把产品提供的 colors 写入 CSS 变量
- * 不传 / 空字符串时回退默认蓝
+ * 按主题 value 切换主色（浅色阶自动生成并写入 --ep-color-primary*）
  * @param {string} [themeValue='defaultBlue']
- * @param {object} [options]
- * @param {HTMLElement} [options.target=document.documentElement]
- * @returns {{ name: string, value: string } | null}
- *
- * @example
- * setTheme()
- * setTheme('defaultBlue')
+ * @param {{ target?: HTMLElement }} [options]
  */
 export function setTheme(themeValue = DEFAULT_THEME_VALUE, options = {}) {
   if (typeof document === 'undefined') return null
@@ -37,14 +26,14 @@ export function setTheme(themeValue = DEFAULT_THEME_VALUE, options = {}) {
     console.warn('[yo-pc-ui] setTheme: unknown theme', themeValue, '→ fallback', DEFAULT_THEME_VALUE)
     preset = themePresets.find((t) => t.value === DEFAULT_THEME_VALUE)
   }
-  if (!preset?.colors) {
-    console.warn('[yo-pc-ui] setTheme: theme colors missing', value)
+  if (!preset?.primary) {
+    console.warn('[yo-pc-ui] setTheme: theme primary missing', value)
     return null
   }
 
   const { target = document.documentElement } = options
-  Object.entries(preset.colors).forEach(([key, cssValue]) => {
-    if (cssValue == null || cssValue === '') return
+  const vars = buildPrimaryVars(preset)
+  Object.entries(vars).forEach(([key, cssValue]) => {
     target.style.setProperty(`--${key}`, cssValue)
   })
 
@@ -57,4 +46,4 @@ export function getCurrentTheme() {
   return currentThemeValue
 }
 
-export { themePresets }
+export { themePresets, buildPrimaryVars }
