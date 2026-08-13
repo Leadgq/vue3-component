@@ -12,7 +12,7 @@
         <div class="file-actions">
           <el-link v-if="canPreview(file)" type="success" :underline="false"
             @click.stop="handlePreview(file)">预览</el-link>
-          <el-link v-if="file.type === 'video/mp4'" type="success" :underline="false"
+          <el-link v-if="isVideoFile(file)" type="success" :underline="false"
             @click.stop="playVideo(file)">播放</el-link>
           <el-link type="primary" :underline="false" @click.stop="handleDownLoad(file)">下载</el-link>
         </div>
@@ -36,10 +36,10 @@
             </template>
           </el-image>
           <div v-else class="grid-non-image-item" :style="{ width: props.width, height: props.height, margin: '4px' }"
-            @click.stop="file.type === 'video/mp4' ? playVideo(file) : handlePreview(file)">
+            @click.stop="isVideoFile(file) ? playVideo(file) : handlePreview(file)">
             <img class="grid-file-icon" :src="getFileIcon(file)" alt="icon" />
             <span class="grid-file-name" :title="file.name">{{ file.name }}</span>
-            <div v-if="file.type === 'video/mp4'" class="grid-play-icon">
+            <div v-if="isVideoFile(file)" class="grid-play-icon">
               <el-icon>
                 <CaretRight />
               </el-icon>
@@ -80,17 +80,7 @@ import 'xgplayer/dist/index.min.css';
 import { YoFileView } from '../fileView'
 import { YoPictureView } from "../pictureView"
 import { useYoConfig } from '../../core/config'
-
-import iconAudio from '../../assets/audio.png'
-import iconExcel from '../../assets/excel.png'
-import iconImage from '../../assets/image.png'
-import iconMp4 from '../../assets/mp4.png'
-import iconPdf from '../../assets/pdf.png'
-import iconPpt from '../../assets/ppt.png'
-import iconText from '../../assets/text.png'
-import iconWord from '../../assets/world.png'
-import iconZip from '../../assets/zip.png'
-import iconEmty from '../../assets/emty.png'
+import { isImgType, isVideoFile, canPreview, formatSize, getFileIcon, getFileExt, inferMimeFromExt } from '../fileType'
 
 const props = defineProps({
   ids: { type: Array, default: () => [] },
@@ -131,16 +121,6 @@ const finalApiUrl = computed(() => {
 
 const minioAddres = computed(() => minioServiceApi.value)
 
-const isImgType = (filetype) => {
-  const ctypeArr = ["image/png", "image/jpeg", "image/gif", "image/tiff", "image/x-icon"]
-  return ctypeArr.includes(filetype)
-}
-
-const canPreview = (file) => {
-  const previewTypes = ["application/pdf", "application/msword", "application/vnd.ms-excel", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.presentationml.presentation"]
-  return isImgType(file.type) || previewTypes.includes(file.type)
-}
-
 const byDomainJudgePrefix = () => {
   let domainPrefix = 'https://qiniucnd.hnyotech.com.cn'
   if (props.qiNiuCdnAPI) return props.qiNiuCdnAPI
@@ -151,49 +131,6 @@ const byDomainJudgePrefix = () => {
   return domainPrefix
 }
 
-const formatSize = (size) => {
-  if (!size) return '';
-  const numSize = Number(size);
-  if (isNaN(numSize)) return '';
-  if (numSize < 1024) return numSize + ' B';
-  if (numSize < 1024 * 1024) return (numSize / 1024).toFixed(2) + ' KB';
-  if (numSize < 1024 * 1024 * 1024) return (numSize / (1024 * 1024)).toFixed(2) + ' MB';
-  return (numSize / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
-}
-
-const getFileIcon = (file) => {
-  const name = file.name || '';
-  const ext = name.split('.').pop().toLowerCase();
-
-  if (['mp3', 'wav', 'wma', 'ogg', 'aac', 'flac'].includes(ext)) {
-    return iconAudio;
-  }
-  if (['xls', 'xlsx', 'csv'].includes(ext)) {
-    return iconExcel;
-  }
-  if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', 'tiff'].includes(ext)) {
-    return iconImage;
-  }
-  if (['mp4', 'avi', 'rmvb', 'rm', 'flv', 'wmv', 'mkv'].includes(ext)) {
-    return iconMp4;
-  }
-  if (['pdf'].includes(ext)) {
-    return iconPdf;
-  }
-  if (['ppt', 'pptx'].includes(ext)) {
-    return iconPpt;
-  }
-  if (['txt', 'log', 'md'].includes(ext)) {
-    return iconText;
-  }
-  if (['doc', 'docx'].includes(ext)) {
-    return iconWord;
-  }
-  if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
-    return iconZip;
-  }
-  return iconEmty;
-}
 
 const imageList = computed(() => {
   return fileList.value.filter(f => isImgType(f.type)).map(f => {
@@ -214,27 +151,7 @@ const handlerMinIo = async () => {
     item.id = file.Id || file.ItemId
     item.name = file.ItemName
     item.size = file.FileSize
-    item.type = file.ContentType
-    let ext = ''
-    if (item.name && item.name.includes('.')) {
-      ext = item.name.split('.').pop().toLowerCase()
-    } else if (file.Path && file.Path.includes('.')) {
-      ext = file.Path.split('.').pop().toLowerCase()
-    }
-
-    if (!item.type && ext) {
-      if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'].includes(ext)) {
-        item.type = `image/${ext === 'jpg' ? 'jpeg' : ext}`
-      } else if (ext === 'pdf') {
-        item.type = 'application/pdf'
-      } else if (['doc', 'docx'].includes(ext)) {
-        item.type = 'application/msword'
-      } else if (['xls', 'xlsx'].includes(ext)) {
-        item.type = 'application/vnd.ms-excel'
-      } else if (['ppt', 'pptx'].includes(ext)) {
-        item.type = 'application/vnd.ms-powerpoint'
-      }
-    }
+    item.type = file.ContentType || inferMimeFromExt(getFileExt({ name: item.name, Path: file.Path }))
     let urlPath = file.Path || ''
     if (urlPath && !urlPath.startsWith('/')) urlPath = '/' + urlPath
 
@@ -247,15 +164,16 @@ const handlerMinIo = async () => {
 
 const formatDefaultFile = (file) => {
   let item = { ...file }
+  if (!item.type) item.type = inferMimeFromExt(getFileExt(file))
   if ((file.storagetype === 2 && file.filepath) || props.upType === 'qiniu') {
     item.orgurl = byDomainJudgePrefix() + file.filepath
     item.url = item.orgurl
   } else {
     const query = `id=${file.id}&sign=${file.sign}&timestamp=${file.timestamp}`
-    if (isImgType(file.type)) {
+    if (isImgType(item.type)) {
       item.orgurl = `${finalApiUrl.value}/api/Attach/ShowImage?${query}`
       item.url = `${finalApiUrl.value}/api/Attach/ShowThumbImage?${query}`
-    } else if (file.type === "application/pdf") {
+    } else if (item.type === "application/pdf") {
       item.orgurl = `${finalApiUrl.value}/api/Attach/Download?${query}`
       item.url = `${finalApiUrl.value}/api/Attach/ShowPDF?${query}`
     } else {
@@ -302,7 +220,7 @@ const loadData = async (ids) => {
 }
 
 const handlePreview = (file, isImageList = false, options = {}) => {
-  if (file.type === 'video/mp4') {
+  if (isVideoFile(file)) {
     playVideo(file)
     return
   }
