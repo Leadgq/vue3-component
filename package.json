@@ -1,7 +1,7 @@
 {
   "name": "yo-pc-ui-component",
   "private": false,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Vue 3 Component Library based on Element Plus with custom styles and logic",
   "type": "module",
   "main": "dist/index.js",
