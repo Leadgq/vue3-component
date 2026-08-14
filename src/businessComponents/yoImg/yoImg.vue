@@ -11,10 +11,10 @@
         </div>
         <div class="file-actions">
           <el-link v-if="canPreview(file)" type="success" :underline="false"
-            @click.stop="handlePreview(file)">预览</el-link>
+            @click.stop="handlePreview(file)">{{ t('common.preview') }}</el-link>
           <el-link v-if="isVideoFile(file)" type="success" :underline="false"
-            @click.stop="playVideo(file)">播放</el-link>
-          <el-link type="primary" :underline="false" @click.stop="handleDownLoad(file)">下载</el-link>
+            @click.stop="playVideo(file)">{{ t('common.play') }}</el-link>
+          <el-link type="primary" :underline="false" @click.stop="handleDownLoad(file)">{{ t('common.download') }}</el-link>
         </div>
       </div>
     </template>
@@ -55,7 +55,7 @@
       <div v-else class="no-file-text">
         <el-icon>
           <Warning />
-        </el-icon> 暂无文件
+        </el-icon> {{ t('empty.noFile') }}
       </div>
     </div>
 
@@ -64,7 +64,7 @@
     <YoFileView ref="fileViewRef" />
 
     <!-- 视频播放对话框 -->
-    <el-dialog v-model="videoDialogVisible" :title="currentVideo?.name || '视频播放'" width="800px" append-to-body
+    <el-dialog v-model="videoDialogVisible" :title="currentVideo?.name || t('file.playVideo')" width="800px" append-to-body
       destroy-on-close @opened="handleVideoDialogOpened" @close="handleVideoDialogClose">
       <div id="mse" class="video-player-container"></div>
     </el-dialog>
@@ -81,6 +81,7 @@ import { YoFileView } from '../fileView'
 import { YoPictureView } from "../pictureView"
 import { useYoConfig } from '../../core/config'
 import { isImgType, isVideoFile, canPreview, formatSize, getFileIcon, getFileExt, inferMimeFromExt } from '../fileType'
+import { t, getLocale } from '../../core/i18n'
 
 const props = defineProps({
   ids: { type: Array, default: () => [] },
@@ -246,7 +247,7 @@ const handleVideoDialogOpened = () => {
   playInstance.value = new Player({
     id: 'mse',
     url: currentVideo.value.orgurl,
-    lang: 'zh-cn',
+    lang: getLocale() === 'en' ? 'en' : 'zh-cn',
     autoplay: true,
     fluid: true,
     width: '100%',

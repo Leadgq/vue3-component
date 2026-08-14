@@ -1,6 +1,6 @@
 <template>
     <div v-if="isSearchModel" class="search-input-plus" :style="{ width: width }">
-        <YoInput v-model="searchValue" :placeholder="placeholder" v-bind="attrs" :type="type">
+        <YoInput v-model="searchValue" :placeholder="placeholder || t('search.placeholder')" v-bind="attrs" :type="type">
             <template #prefix>
                 <el-icon>
                     <Search />
@@ -12,7 +12,7 @@
                         <slot name="default" />
                     </template>
                     <template v-else>
-                        搜索
+                        {{ t('common.search') }}
                     </template>
                 </YoButton>
             </template>
@@ -24,7 +24,7 @@
                 <slot name="default" />
             </template>
             <template v-else>
-                高级搜索
+                {{ t('search.advanced') }}
             </template>
             <el-icon class="ep-icon--right">
                 <ArrowDown v-if="direction === 'down'" />
@@ -40,6 +40,7 @@ import { Search, ArrowDown, ArrowUp } from "@element-plus/icons-vue"
 import { ElIcon } from "element-plus"
 import { YoInput } from "../input"
 import { YoButton } from "../button"
+import { t } from "../../core/i18n"
 const attrs = useAttrs()
 const slots = useSlots()
 const searchValue = defineModel()
@@ -51,7 +52,7 @@ defineProps({
     },
     placeholder: {
         type: String,
-        default: "请输入"
+        default: ""
     },
     isSearchModel: {
         type: Boolean,

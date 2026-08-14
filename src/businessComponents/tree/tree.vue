@@ -1,7 +1,7 @@
 <template>
     <div class="yo-tree-wrap" v-loading="loading">
         <div v-if="showSearch" class="yo-tree-search-wrap">
-            <el-input v-model="filterText" :placeholder="searchPlaceholder" clearable v-if="showFilter">
+            <el-input v-model="filterText" :placeholder="searchPlaceholder || t('tree.filter')" clearable v-if="showFilter">
                 <template #prefix>
                     <el-icon>
                         <Search />
@@ -9,27 +9,27 @@
                 </template>
             </el-input>
             <div v-if="showActions" class="yo-tree-actions">
-                <el-tooltip content="展开全部" placement="top">
+                <el-tooltip :content="t('tree.expandAll')" placement="top">
                     <el-icon class="action-icon" @click="toggleExpandAll(true)">
                         <Expand />
                     </el-icon>
                 </el-tooltip>
-                <el-tooltip content="收起全部" placement="top">
+                <el-tooltip :content="t('tree.collapseAll')" placement="top">
                     <el-icon class="action-icon" @click="toggleExpandAll(false)">
                         <Fold />
                     </el-icon>
                 </el-tooltip>
-                <el-tooltip v-if="showCheckbox" content="全选" placement="top">
+                <el-tooltip v-if="showCheckbox" :content="t('tree.checkAll')" placement="top">
                     <el-icon class="action-icon" @click="checkAll(true)">
                         <Checked />
                     </el-icon>
                 </el-tooltip>
-                <el-tooltip v-if="showCheckbox" content="全不选" placement="top">
+                <el-tooltip v-if="showCheckbox" :content="t('tree.uncheckAll')" placement="top">
                     <el-icon class="action-icon" @click="checkAll(false)">
                         <Delete />
                     </el-icon>
                 </el-tooltip>
-                <el-tooltip content="刷新" placement="top">
+                <el-tooltip :content="t('tree.refresh')" placement="top">
                     <el-icon class="action-icon" @click="loadData">
                         <Refresh />
                     </el-icon>
@@ -71,6 +71,7 @@ import {
     ref, computed, watch, onMounted, useAttrs, getCurrentInstance, defineExpose
 } from "vue"
 import { YoEmpty } from "../../components/empty"
+import { t } from '../../core/i18n'
 
 const proxy = getCurrentInstance().proxy
 
@@ -123,7 +124,7 @@ const props = defineProps({
     },
     searchPlaceholder: {
         type: String,
-        default: '输入关键字过滤'
+        default: ''
     },
     showActions: {
         type: Boolean,

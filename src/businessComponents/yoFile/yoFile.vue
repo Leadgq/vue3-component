@@ -46,14 +46,14 @@
         <el-icon class="avatar-uploader-icon">
           <Plus />
         </el-icon>
-        <div v-if="isHasText" class="yo-add-text">{{ uploadText }}</div>
+        <div v-if="isHasText" class="yo-add-text">{{ uploadText || t('file.uploadImage') }}</div>
       </template>
       <template v-else-if="dragMode">
         <slot name="trigger">
           <div class="yo-drag-inner" v-if="!readOnly">
             <img :src="uploadIcon" class="yo-drag-icon-img" />
-            <div class="yo-drag-title">点击上传</div>
-            <div class="yo-drag-sub">或将附件拖拽到此处</div>
+            <div class="yo-drag-title">{{ t('file.clickUpload') }}</div>
+            <div class="yo-drag-sub">{{ t('file.dragHint') }}</div>
           </div>
         </slot>
       </template>
@@ -61,7 +61,7 @@
         <slot name="trigger">
           <el-button class="yo-file-upload-btn" v-if="!readOnly" :disabled="(fileList.length >= fileLimit) && fileLimit" type="primary"
             size="small">{{
-              uploadBtnName
+              uploadBtnName || t('common.upload')
             }}</el-button>
         </slot>
       </template>
@@ -74,7 +74,7 @@
     <!-- 从网盘选择按钮 -->
     <el-button v-if="!readOnly && showNetDisk" type="success" size="small" class="yo-net-disk-btn"
       :disabled="(fileList.length >= fileLimit) && fileLimit > 0" @click="openNetDisk">
-      从网盘选择
+      {{ t('file.fromNetDisk') }}
     </el-button>
 
     <!-- 列表模式展示-->
@@ -84,14 +84,14 @@
       <div v-if="showTable" class="yo-file-table-container">
         <div class="yo-file-table-header">
           <div class="header-indicator"></div>
-          <span class="header-title">附件信息({{ fileList.length }})</span>
+          <span class="header-title">{{ t('file.attachInfo', { count: fileList.length }) }}</span>
         </div>
         <div class="yo-file-table">
           <div class="table-header">
-            <div class="col-name">附件名称</div>
-            <div class="col-size">大小</div>
-            <div class="col-status">状态</div>
-            <div class="col-action">操作</div>
+            <div class="col-name">{{ t('file.fileName') }}</div>
+            <div class="col-size">{{ t('file.size') }}</div>
+            <div class="col-status">{{ t('file.status') }}</div>
+            <div class="col-action">{{ t('file.action') }}</div>
           </div>
           <div class="table-body">
             <div v-for="file in fileList" :key="file.id || file.uid" class="table-row">
@@ -101,25 +101,25 @@
               </div>
               <div class="col-size">{{ formatSize(file.filesize || file.size || file.length) }}</div>
               <div class="col-status">
-                <span v-if="file.status === 'ready'" class="status-ready">待上传</span>
-                <span v-else-if="file.status === 'uploading'" class="status-ready">上传中...</span>
+                <span v-if="file.status === 'ready'" class="status-ready">{{ t('file.pending') }}</span>
+                <span v-else-if="file.status === 'uploading'" class="status-ready">{{ t('file.uploading') }}</span>
                 <span v-else-if="file.status === 'error'" class="status-error">
                   <el-icon>
                     <CircleClose />
-                  </el-icon> 上传失败
+                  </el-icon> {{ t('file.uploadFail') }}
                 </span>
                 <span v-else class="status-success">
                   <el-icon>
                     <CircleCheck />
-                  </el-icon> 上传成功
+                  </el-icon> {{ t('file.uploadSuccess') }}
                 </span>
               </div>
               <div class="col-action">
                 <el-link v-if="file.status !== 'ready' && file.status !== 'error'"
                   :disabled="file.status === 'uploading'" type="primary" :underline="false"
-                  @click.stop="handleDownLoad(file)" style="margin-right:12px;">下载</el-link>
+                  @click.stop="handleDownLoad(file)" style="margin-right:12px;">{{ t('common.download') }}</el-link>
                 <el-link v-if="!readOnly" type="primary" :underline="false"
-                  @click.stop="handleRemove(file)">删除</el-link>
+                  @click.stop="handleRemove(file)">{{ t('common.delete') }}</el-link>
               </div>
             </div>
           </div>
@@ -142,11 +142,11 @@
 
           <div class="file-actions">
               <el-link v-if="canPreview(file)" type="success" :underline="false"
-              @click.stop="handlePreview(file)">预览</el-link>
+              @click.stop="handlePreview(file)">{{ t('common.preview') }}</el-link>
             <el-link v-if="isVideoFile(file)" type="success" :underline="false"
-              @click="playVideo(file)">播放</el-link>
-            <el-link type="primary" :underline="false" @click.stop="handleDownLoad(file)">下载</el-link>
-            <el-link v-if="!readOnly" type="danger" :underline="false" @click.stop="handleRemove(file)">删除</el-link>
+              @click="playVideo(file)">{{ t('common.play') }}</el-link>
+            <el-link type="primary" :underline="false" @click.stop="handleDownLoad(file)">{{ t('common.download') }}</el-link>
+            <el-link v-if="!readOnly" type="danger" :underline="false" @click.stop="handleRemove(file)">{{ t('common.delete') }}</el-link>
           </div>
         </div>
       </div>
@@ -156,17 +156,17 @@
     <YoFileView ref="fileViewRef" />
 
     <!-- 视频播放对话框 -->
-    <el-dialog v-model="videoDialogVisible" :title="currentVideo?.name || '视频播放'" width="800px" append-to-body
+    <el-dialog v-model="videoDialogVisible" :title="currentVideo?.name || t('file.playVideo')" width="800px" append-to-body
       destroy-on-close @opened="handleVideoDialogOpened" @close="handleVideoDialogClose">
       <div id="mse" class="video-player-container"></div>
     </el-dialog>
 
     <!-- 网盘选择对话框 -->
-    <el-dialog v-model="netDiskVisible" title="从网盘选择文件" width="800px" append-to-body>
+    <el-dialog v-model="netDiskVisible" :title="t('file.netDiskTitle')" width="800px" append-to-body>
       <div v-loading="netDiskLoading" class="yo-net-disk-container">
         <el-table :data="netDiskFiles" height="400px" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" />
-          <el-table-column label="文件名" min-width="200">
+          <el-table-column :label="t('file.netDiskFileName')" min-width="200">
             <template #default="{ row }">
               <div class="file-name-cell">
                 <img class="cell-file-icon" :src="getFileIcon(row)" alt="icon" />
@@ -174,19 +174,19 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="大小" width="120">
+          <el-table-column :label="t('file.size')" width="120">
             <template #default="{ row }">
               {{ formatSize(row.size || row.filesize || row.length) }}
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="上传时间" width="180" />
+          <el-table-column prop="createTime" :label="t('file.uploadTime')" width="180" />
         </el-table>
       </div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="netDiskVisible = false">取消</el-button>
+          <el-button @click="netDiskVisible = false">{{ t('common.cancel') }}</el-button>
           <el-button type="primary" :disabled="selectedNetFiles.length === 0" @click="handleNetDiskConfirm">
-            确定 ({{ selectedNetFiles.length }})
+            {{ t('file.confirmCount', { count: selectedNetFiles.length }) }}
           </el-button>
         </span>
       </template>
@@ -204,6 +204,7 @@ import { YoFileView } from '../fileView'
 import { YoPictureView } from '../pictureView'
 import { useYoConfig } from '../../core/config'
 import { isImgType, isVideoFile, canPreview, formatSize, getFileIcon, getFileExt, inferMimeFromExt } from '../fileType'
+import { t, getLocale } from '../../core/i18n'
 import uploadIcon from "../../assets/upload.png"
 
 defineOptions({
@@ -217,11 +218,11 @@ const currentVideo = ref(null)
 const props = defineProps({
   modelValue: { type: [Array, String], default: () => [] },
   ids: { type: [Array, String], default: () => [] },
-  uploadBtnName: { type: String, default: '上传' },
+  uploadBtnName: { type: String, default: '' },
   uploadType: { type: Number, default: 3 }, // 1: picture-card, 3/4: file
   readOnly: { type: Boolean, default: false },
   isHasText: { type: Boolean, default: false },
-  uploadText: { type: String, default: '上传图片' },
+  uploadText: { type: String, default: '' },
   isDelete: { type: Boolean, default: true },
   isShowUpload: { type: Boolean, default: true },
   showTable: { type: Boolean, default: false }, // 是否展示大表格样式的附件列表
@@ -279,7 +280,7 @@ const handleVideoDialogOpened = () => {
   playInstance.value = new Player({
     id: 'mse',
     url: currentVideo.value.orgurl,
-    lang: 'zh-cn',
+    lang: getLocale() === 'en' ? 'en' : 'zh-cn',
     autoplay: true,
     fluid: true, // 宽高自适应
     width: '100%',
@@ -307,7 +308,7 @@ const openNetDisk = async () => {
   netDiskLoading.value = true
   try {
     if (!minioServiceApi.value) {
-      throw new Error('网盘模式,请配置minio服务地址')
+      throw new Error(t('file.netDiskNeedMinio'))
     }
     const api = minioServiceApi.value + '/api/Directory/QueryPage';
     const res = await proxy.$http.post(api, {
@@ -330,7 +331,7 @@ const openNetDisk = async () => {
     })
   } catch (error) {
     console.error('Fetch net disk files error:', error)
-    ElMessage.error('获取网盘文件失败')
+    ElMessage.error(t('file.netDiskFetchFail'))
   } finally {
     netDiskLoading.value = false
   }
@@ -346,13 +347,13 @@ const handleNetDiskConfirm = () => {
   const remaining = limit - currentCount
 
   if (remaining <= 0) {
-    ElMessage.warning(`最多只能上传 ${limit} 个文件`)
+    ElMessage.warning(t('file.maxFiles', { limit }))
     return
   }
 
   const toAdd = selectedNetFiles.value.slice(0, remaining)
   if (selectedNetFiles.value.length > remaining) {
-    ElMessage.warning(`选取文件超过限制，仅添加前 ${remaining} 个`)
+    ElMessage.warning(t('file.exceedLimit', { remaining }))
   }
 
   toAdd.forEach(file => {
@@ -446,7 +447,7 @@ const handleFileChange = (file) => {
       updateIdsEmit()
     } else {
       console.log('--- handleFileChange file exists ---', file.name)
-      ElMessage.error('已经上传过同名文件!')
+      ElMessage.error(t('file.duplicateName'))
       if (uploadRef.value) uploadRef.value.handleRemove(file)
     }
   } else if (file.status === 'uploading') {
@@ -466,7 +467,7 @@ const handleBeforeUpload = (file) => {
   if (sameFileName) {
     const isAlreadyNotified = !fileList.value.some(item => String(item.uid) === String(file.uid))
     if (!isAlreadyNotified) {
-      ElMessage.error('已经上传过同名文件!')
+      ElMessage.error(t('file.duplicateName'))
     }
     setFileError()
     return false
@@ -477,7 +478,7 @@ const handleBeforeUpload = (file) => {
 
     if (file.size > limitBytes) {
       const limitMB = (limitBytes / 1024 / 1024).toFixed(2);
-      ElMessage.error(`上传文件大小不能超过 ${limitMB.replace('.00', '')} MB!`)
+      ElMessage.error(t('file.sizeLimit', { size: limitMB.replace('.00', '') }))
       setFileError()
       return false
     }
@@ -595,7 +596,7 @@ const customHttpRequest = async (param) => {
     fileList.value = fileList.value.filter(f => f.uid !== param.file.uid)
     updateIdsEmit()
     console.error('Upload Error: ', error)
-    ElMessage.error('上传失败!')
+    ElMessage.error(t('file.uploadFailMsg'))
     param.onError(error)
   }
 }
@@ -606,9 +607,9 @@ const handleRemove = async (file) => {
   }
 
   try {
-    await ElMessageBox.confirm(`确定要删除${file.name}该附件吗？`, '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    await ElMessageBox.confirm(t('file.deleteConfirm', { name: file.name }), t('common.tip'), {
+      confirmButtonText: t('common.confirm'),
+      cancelButtonText: t('common.cancel'),
       type: 'warning'
     })
 
@@ -636,7 +637,7 @@ const handleRemove = async (file) => {
     fileList.value = fileList.value.filter(item => item.id !== file.id)
     updateIdsEmit()
     emit('delFile', file.id)
-    ElMessage.success('删除成功')
+    ElMessage.success(t('file.deleteSuccess'))
   } catch (e) {
     if (e !== 'cancel') {
       console.error('Remove file error:', e)

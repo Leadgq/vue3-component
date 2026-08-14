@@ -2,11 +2,11 @@
     <div class="yo-query" :style="gridStyle">
         <YoTitle v-if="title" :content="title" class="title"></YoTitle>
         <div class="plus-flex search flex-end align-center" :class="{ isActive: isShowSuperSearchArea }">
-            <YoSearch v-model="model[quickSearchKey]" :width="'386px'" placeholder="快速搜索" v-if="!isShowSuperSearchArea"
+            <YoSearch v-model="model[quickSearchKey]" :width="'386px'" :placeholder="t('query.quickSearch')" v-if="!isShowSuperSearchArea"
                 @search="quickSearch"></YoSearch>
             <YoSearch :isSearchModel="false" :direction="isShowSuperSearchArea ? 'up' : 'down'" :button-type="'default'"
                 class="super-search" @advancedSearch="advancedSearch">
-                {{ isShowSuperSearchArea ? '收起' : '高级搜索' }}
+                {{ isShowSuperSearchArea ? t('query.collapse') : t('search.advanced') }}
             </YoSearch>
 
             <!-- 字段设置 (仅在高级搜索模式下显示) -->
@@ -19,9 +19,9 @@
                 </template>
                 <div class="setting-content">
                     <div class="plus-flex align-center setting-title">
-                        <span class="tips">选择想要展示的筛选信息</span>
+                        <span class="tips">{{ t('query.fieldSetting') }}</span>
                         <el-icon class="pointer cursor-pointer" style="margin-left: 8px;" @click="resetFields"
-                            title="重置">
+                            :title="t('query.resetFields')">
                             <Refresh />
                         </el-icon>
                     </div>
@@ -72,8 +72,8 @@
             'flex-start': btnPostion === 'start',
             'justify-center': btnPostion === 'center'
         }" v-if="isShowSuperSearchArea">
-            <yo-button type="primary" @click="reload">重置</yo-button>
-            <yo-button type="default" @click="search">搜索</yo-button>
+            <yo-button type="primary" @click="reload">{{ t('common.reset') }}</yo-button>
+            <yo-button type="default" @click="search">{{ t('common.search') }}</yo-button>
         </div>
     </div>
 </template>
@@ -94,6 +94,7 @@ import { YoTitle } from "../title"
 import { Menu, Refresh } from "@element-plus/icons-vue"
 import { useQueryCache, useQueryFields } from './queryCacheUtil'
 import { RenderCell, FieldItem } from "../form/formRenderer"
+import { t } from '../../core/i18n'
 
 const props = defineProps({
     title: {

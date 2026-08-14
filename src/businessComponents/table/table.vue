@@ -32,6 +32,7 @@ import { vLoading } from "element-plus"
 import { YoEmpty } from "../../components/empty";
 import { renderCell } from './table.utils.js'
 import { getPageStoragePrefix } from '../../core/appKey.js'
+import { t } from '../../core/i18n'
 const proxy = getCurrentInstance().proxy;
 const yoGridContext = inject('yoGridContext', null)
 
@@ -218,8 +219,8 @@ const TableColumn = (colProps) => {
                             default: () => (
                                 <div class="setting-content">
                                     <div class="plus-flex align-center setting-title">
-                                        <span class="tips">选择列中要展示的信息</span>
-                                        <ElIcon class="pointer cursor-pointer" style="margin-left: 8px;" onClick={resetColumns} title="重置列">
+                                        <span class="tips">{t('table.columnSetting')}</span>
+                                        <ElIcon class="pointer cursor-pointer" style="margin-left: 8px;" onClick={resetColumns} title={t('table.resetColumns')}>
                                             <Refresh />
                                         </ElIcon>
                                     </div>
@@ -282,7 +283,7 @@ function useTableColumns(props, emit) {
         if (cols.length > 0) {
             const hasIndex = cols.some(c => c.type === 'index' || c.prop === '__index')
             if (!hasIndex) {
-                const indexCol = { type: 'index', label: '序号', width: props.noWidth, align: 'center', prop: '__index', fixed: 'left' }
+                const indexCol = { type: 'index', label: t('table.index'), width: props.noWidth, align: 'center', prop: '__index', fixed: 'left' }
                 const expandIdx = cols.findIndex(c => c.type === 'expand')
                 if (expandIdx !== -1) {
                     cols.splice(expandIdx + 1, 0, indexCol)

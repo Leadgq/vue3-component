@@ -12,7 +12,7 @@
                     <el-icon>
                         <Back />
                     </el-icon>
-                    {{ btnText }}
+                    {{ btnText || t('common.back') }}
                 </YoButton>
             </section>
         </div>
@@ -27,6 +27,7 @@ import { YoButton } from "../../components/button"
 import { getCurrentInstance } from 'vue';
 import { Back } from '@element-plus/icons-vue'
 import { ElIcon } from 'element-plus';
+import { t } from '../../core/i18n'
 const emit = defineEmits(['back'])
 const props = defineProps({
     title: {
@@ -39,7 +40,7 @@ const props = defineProps({
     },
     btnText: {
         type: String,
-        default: '返回'
+        default: ''
     }
 })
 

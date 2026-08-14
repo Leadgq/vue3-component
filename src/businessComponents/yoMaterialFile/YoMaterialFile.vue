@@ -2,7 +2,7 @@
   <div class="yo-material-file">
     <el-form-item v-for="(item, index) in modelValue" :key="item.MaterialId || index" class="material-row"
       v-bind="attrs" :prop="parentProp ? `${parentProp}.${index}.Files` : ''"
-      :rules="item.IsRequired ? [{ required: true, message: '请上传' + item.MaterialName, trigger: 'change' }] : []">
+      :rules="item.IsRequired ? [{ required: true, message: t('material.uploadRequired', { name: item.MaterialName }), trigger: 'change' }] : []">
       <!-- 左侧: label -->
       <template #label>
         <div class="material-label-container">
@@ -10,7 +10,7 @@
           <template v-if="item.ExcelTempId">
             <div v-for="(tempId, subIndex) in splitIds(item.ExcelTempId)" :key="tempId" class="template-down">
               <el-button type="link" size="small" class="template-btn" @click="handleDownloadTemplate(tempId, index)">
-                模板下载 {{ splitIds(item.ExcelTempId).length > 1 ? (subIndex + 1) : '' }}
+                {{ t('material.templateDownload') }} {{ splitIds(item.ExcelTempId).length > 1 ? (subIndex + 1) : '' }}
               </el-button>
             </div>
           </template>
@@ -23,7 +23,7 @@
         <!-- 合同签署模式 (Channel 10) -->
         <template v-if="signContractChannel === 10">
           <div class="contract-view-container">
-            <el-button type="primary" size="small" @click="handleViewContract(index)">查看</el-button>
+            <el-button type="primary" size="small" @click="handleViewContract(index)">{{ t('common.view') }}</el-button>
             <YoImg :ref="el => (contractPreviewRefs[index] = el)" :ids="splitIds(item.ExcelSignTempId)" :apiUrl="apiUrl"
               class="hidden-preview" />
           </div>
@@ -39,7 +39,7 @@
             <el-icon class="no-file-icon">
               <InfoFilled />
             </el-icon>
-            <span>暂无文件</span>
+            <span>{{ t('empty.noFile') }}</span>
           </div>
         </template>
 
@@ -61,6 +61,7 @@ import { InfoFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useYoConfig } from '../../core/config'
 import FileView from '../fileView/fileView.vue'
+import { t } from '../../core/i18n'
 
 const config = useYoConfig()
 
@@ -77,7 +78,7 @@ const modelValue = defineModel({
 const props = defineProps({
   readOnly: { type: Boolean, default: false },
   apiUrl: { type: String, default: '' },
-  uploadBtnName: { type: String, default: '上传' },
+  uploadBtnName: { type: String, default: '' },
   signContractChannel: { type: Number, default: 0 },
   fileUrl: { type: String, default: '' },
   api: { type: String, default: '' },
@@ -113,11 +114,11 @@ const handleDownloadTemplate = async (id, index) => {
       const base = props.apiUrl || config.attachApi
       triggerDownload(`${base}/api/Attach/Download?id=${fileId}&sign=${sign}&timestamp=${timestamp}`, name, index)
     } else {
-      ElMessage.error('获取模板失败')
+      ElMessage.error(t('material.fetchTemplateFail'))
     }
   } catch (error) {
     console.error('Download template error:', error)
-    ElMessage.error('下载遇到错误')
+    ElMessage.error(t('material.downloadError'))
   }
 }
 
@@ -136,7 +137,7 @@ const handleViewContract = (index) => {
   if (refEl) {
     refEl.hanlderPreveFileList()
   } else {
-    ElMessage.warning('暂无可查看的内容')
+    ElMessage.warning(t('material.nothingToView'))
   }
 }
 

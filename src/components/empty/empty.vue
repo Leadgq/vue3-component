@@ -1,5 +1,5 @@
 <template>
-  <el-empty class="yo-empty" :image="image" :image-size="imageSize" :description="description" v-bind="$attrs">
+  <el-empty class="yo-empty" :image="image" :image-size="imageSize" :description="description || t('empty.noData')" v-bind="$attrs">
     <template v-for="(_, name) in slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
@@ -10,6 +10,7 @@
 import { ElEmpty } from 'element-plus'
 import { useSlots } from 'vue'
 import defaultImage from '../../assets/emty.png'
+import { t } from '../../core/i18n'
 
 defineOptions({
   name: 'YoEmpty',
@@ -28,7 +29,7 @@ const props = defineProps({
   },
   description: {
     type: String,
-    default: '暂无数据'
+    default: ''
   }
 })
 </script>

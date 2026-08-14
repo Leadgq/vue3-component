@@ -12,5 +12,6 @@ export * from "./businessComponents";
 export * from "./components/index";
 // 导出主题 API
 export { getTheme, setTheme, getCurrentTheme } from "./themes";
+export { setLocale, getLocale, getLocaleList, localeState, t } from "./core/i18n";
 // 导出默认值
 export default componentLibrary;

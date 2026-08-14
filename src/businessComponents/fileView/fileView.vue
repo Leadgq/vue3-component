@@ -1,5 +1,5 @@
 <template>
-    <ElDrawer v-model="drawer" title="文件预览" size="100%" :z-index="999" append-to-body>
+    <ElDrawer v-model="drawer" :title="t('fileView.title')" size="100%" :z-index="999" append-to-body>
         <component v-if="currentOfficeComponent" :is="currentOfficeComponent" :src="src" style="height: 85vh"
             @rendered="renderedHandler" @error="handleRenderError" :options="options">
         </component>
@@ -9,6 +9,7 @@
 <script setup>
 import { ElDrawer } from "element-plus"
 import { computed, ref, defineAsyncComponent } from 'vue'
+import { t } from '../../core/i18n'
 import '@vue-office/docx/lib/v3/index.css';
 import '@vue-office/excel/lib/v3/index.css';
 
@@ -96,7 +97,7 @@ const isFile = computed(() => {
 
 const previewFile = ({ src: source, type: fileType, fileName, down = false }) => {
     if (!source) {
-        throw new Error("文件地址不能为空")
+        throw new Error(t('fileView.emptyUrl'))
     }
     if (down) {
         downLoadFille(source, fileName)
