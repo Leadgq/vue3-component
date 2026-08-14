@@ -103,13 +103,9 @@ const previewFile = ({ src: source, type: fileType, fileName, down = false }) =>
         downLoadFille(source, fileName)
         return;
     }
-    console.log("getFileSuffix.value", getFileSuffix.value)
     src.value = source
-    console.log("fileType", fileType)
     type.value = fileType
-    console.log("isFile.value", isFile.value)
     if (isFile.value) {
-        console.log("jinru")
         options.value.xls = getFileSuffix.value === 'xls';
         drawer.value = true;
     } else {
