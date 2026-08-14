@@ -8,13 +8,13 @@
     }">
     <!-- uploadType === 1 图片列表 -->
     <ul v-if="uploadType === 1 && fileList.length > 0"
-      class="ep-upload-list ep-upload-list--picture-card yo-custom-picture-list">
+      class="ep-upload-list ep-upload-list--picture-card yo-file__picture-list">
       <li v-for="file in fileList" :key="file.id || file.uid" class="ep-upload-list__item is-success"
         :style="{ width: props.width, height: props.height }">
         <img v-if="isImgType(file.type)" class="ep-upload-list__item-thumbnail" :src="file.url" alt="" />
-        <div v-else class="non-image-thumbnail">
-          <img class="grid-file-icon" :src="getFileIcon(file)" alt="icon" />
-          <span class="grid-file-name" :title="file.name">{{ file.name }}</span>
+        <div v-else class="yo-file__thumb-fallback">
+          <img class="yo-file__thumb-icon" :src="getFileIcon(file)" alt="icon" />
+          <span class="yo-file__thumb-name" :title="file.name">{{ file.name }}</span>
         </div>
         <span class="ep-upload-list__item-actions">
           <span class="ep-upload-list__item-preview" @click.stop="handlePreview(file)">
@@ -40,26 +40,26 @@
       ref="uploadRef" v-bind="$attrs" :drag="dragMode" :accept="computedAccept" :show-file-list="false"
       :file-list="fileList" :http-request="customHttpRequest" :auto-upload="autoUpload"
       :before-upload="handleBeforeUpload" :on-change="handleFileChange"
-      :class="{ 'avatar-uploader': uploadType === 1, 'yo-file-uploader': true }"
+      :class="['yo-file__uploader', { 'yo-file__uploader--picture': uploadType === 1 }]"
       :style="uploadType === 1 ? { width: props.width, height: props.height } : {}">
       <template v-if="uploadType === 1">
-        <el-icon class="avatar-uploader-icon">
+        <el-icon class="yo-file__uploader-icon">
           <Plus />
         </el-icon>
-        <div v-if="isHasText" class="yo-add-text">{{ uploadText || t('file.uploadImage') }}</div>
+        <div v-if="isHasText" class="yo-file__uploader-text">{{ uploadText || t('file.uploadImage') }}</div>
       </template>
       <template v-else-if="dragMode">
         <slot name="trigger">
-          <div class="yo-drag-inner" v-if="!readOnly">
-            <img :src="uploadIcon" class="yo-drag-icon-img" />
-            <div class="yo-drag-title">{{ t('file.clickUpload') }}</div>
-            <div class="yo-drag-sub">{{ t('file.dragHint') }}</div>
+          <div class="yo-file__drag" v-if="!readOnly">
+            <img :src="uploadIcon" class="yo-file__drag-icon" />
+            <div class="yo-file__drag-title">{{ t('file.clickUpload') }}</div>
+            <div class="yo-file__drag-hint">{{ t('file.dragHint') }}</div>
           </div>
         </slot>
       </template>
       <template v-else>
         <slot name="trigger">
-          <el-button class="yo-file-upload-btn" v-if="!readOnly" :disabled="(fileList.length >= fileLimit) && fileLimit" type="primary"
+          <el-button class="yo-file__upload-btn" v-if="!readOnly" :disabled="(fileList.length >= fileLimit) && fileLimit" type="primary"
             size="small">{{
               uploadBtnName || t('common.upload')
             }}</el-button>
@@ -72,49 +72,49 @@
     </el-upload>
 
     <!-- 从网盘选择按钮 -->
-    <el-button v-if="!readOnly && showNetDisk" type="success" size="small" class="yo-net-disk-btn"
+    <el-button v-if="!readOnly && showNetDisk" type="success" size="small" class="yo-file__netdisk-btn"
       :disabled="(fileList.length >= fileLimit) && fileLimit > 0" @click="openNetDisk">
       {{ t('file.fromNetDisk') }}
     </el-button>
 
     <!-- 列表模式展示-->
-    <div v-if="fileList.length > 0 && uploadType !== 1" class="yo-file-list-wrapper">
+    <div v-if="fileList.length > 0 && uploadType !== 1" class="yo-file__list-wrap">
 
       <!-- 表格样式列表 -->
-      <div v-if="showTable" class="yo-file-table-container">
-        <div class="yo-file-table-header">
-          <div class="header-indicator"></div>
-          <span class="header-title">{{ t('file.attachInfo', { count: fileList.length }) }}</span>
+      <div v-if="showTable" class="yo-file__attach">
+        <div class="yo-file__attach-head">
+          <div class="yo-file__attach-indicator"></div>
+          <span class="yo-file__attach-title">{{ t('file.attachInfo', { count: fileList.length }) }}</span>
         </div>
-        <div class="yo-file-table">
-          <div class="table-header">
-            <div class="col-name">{{ t('file.fileName') }}</div>
-            <div class="col-size">{{ t('file.size') }}</div>
-            <div class="col-status">{{ t('file.status') }}</div>
-            <div class="col-action">{{ t('file.action') }}</div>
+        <div class="yo-file__attach-table">
+          <div class="yo-file__attach-header">
+            <div class="yo-file__col--name">{{ t('file.fileName') }}</div>
+            <div class="yo-file__col--size">{{ t('file.size') }}</div>
+            <div class="yo-file__col--status">{{ t('file.status') }}</div>
+            <div class="yo-file__col--action">{{ t('file.action') }}</div>
           </div>
-          <div class="table-body">
-            <div v-for="file in fileList" :key="file.id || file.uid" class="table-row">
-              <div class="col-name file-name-container" @click.stop="handlePreview(file)">
-                <img class="row-file-icon" :src="getFileIcon(file)" alt="icon" />
-                <span class="row-file-name" :title="file.name">{{ file.name }}</span>
+          <div class="yo-file__attach-body">
+            <div v-for="file in fileList" :key="file.id || file.uid" class="yo-file__attach-row">
+              <div class="yo-file__col--name yo-file__name" @click.stop="handlePreview(file)">
+                <img class="yo-file__row-icon" :src="getFileIcon(file)" alt="icon" />
+                <span class="yo-file__row-name" :title="file.name">{{ file.name }}</span>
               </div>
-              <div class="col-size">{{ formatSize(file.filesize || file.size || file.length) }}</div>
-              <div class="col-status">
-                <span v-if="file.status === 'ready'" class="status-ready">{{ t('file.pending') }}</span>
-                <span v-else-if="file.status === 'uploading'" class="status-ready">{{ t('file.uploading') }}</span>
-                <span v-else-if="file.status === 'error'" class="status-error">
+              <div class="yo-file__col--size">{{ formatSize(file.filesize || file.size || file.length) }}</div>
+              <div class="yo-file__col--status">
+                <span v-if="file.status === 'ready'" class="yo-file__status--ready">{{ t('file.pending') }}</span>
+                <span v-else-if="file.status === 'uploading'" class="yo-file__status--ready">{{ t('file.uploading') }}</span>
+                <span v-else-if="file.status === 'error'" class="yo-file__status--error">
                   <el-icon>
                     <CircleClose />
                   </el-icon> {{ t('file.uploadFail') }}
                 </span>
-                <span v-else class="status-success">
+                <span v-else class="yo-file__status--success">
                   <el-icon>
                     <CircleCheck />
                   </el-icon> {{ t('file.uploadSuccess') }}
                 </span>
               </div>
-              <div class="col-action">
+              <div class="yo-file__col--action">
                 <el-link v-if="file.status !== 'ready' && file.status !== 'error'"
                   :disabled="file.status === 'uploading'" type="primary" :underline="false"
                   @click.stop="handleDownLoad(file)" style="margin-right:12px;">{{ t('common.download') }}</el-link>
@@ -127,20 +127,20 @@
       </div>
 
       <!-- 原有普通列表样式 -->
-      <div v-else class="yo-file-list" :class="{ 'yo-file-list-vertical': fileListLayout === 'vertical' }">
-        <div v-for="file in fileList" :key="file.id || file.uid" class="yo-file-item"
-          :class="{ 'yo-file-item-vertical': fileListLayout === 'vertical' }">
-          <div class="file-info-container">
-            <img class="file-icon-img" :src="getFileIcon(file)" alt="icon" />
-            <div class="file-info">
-              <span class="file-name" :title="file.name">{{ file.name }}</span>
-              <span v-if="file.filesize || file.size || file.length" class="file-size">
+      <div v-else class="yo-file__list" :class="{ 'yo-file__list--vertical': fileListLayout === 'vertical' }">
+        <div v-for="file in fileList" :key="file.id || file.uid" class="yo-file__item"
+          :class="{ 'yo-file__item--vertical': fileListLayout === 'vertical' }">
+          <div class="yo-file__item-main">
+            <img class="yo-file__icon" :src="getFileIcon(file)" alt="icon" />
+            <div class="yo-file__info">
+              <span class="yo-file__filename" :title="file.name">{{ file.name }}</span>
+              <span v-if="file.filesize || file.size || file.length" class="yo-file__size">
                 {{ formatSize(file.filesize || file.size || file.length) }}
               </span>
             </div>
           </div>
 
-          <div class="file-actions">
+          <div class="yo-file__actions">
               <el-link v-if="canPreview(file)" type="success" :underline="false"
               @click.stop="handlePreview(file)">{{ t('common.preview') }}</el-link>
             <el-link v-if="isVideoFile(file)" type="success" :underline="false"
@@ -158,18 +158,18 @@
     <!-- 视频播放对话框 -->
     <el-dialog v-model="videoDialogVisible" :title="currentVideo?.name || t('file.playVideo')" width="800px" append-to-body
       destroy-on-close @opened="handleVideoDialogOpened" @close="handleVideoDialogClose">
-      <div id="mse" class="video-player-container"></div>
+      <div id="mse" class="yo-file__player"></div>
     </el-dialog>
 
     <!-- 网盘选择对话框 -->
     <el-dialog v-model="netDiskVisible" :title="t('file.netDiskTitle')" width="800px" append-to-body>
-      <div v-loading="netDiskLoading" class="yo-net-disk-container">
+      <div v-loading="netDiskLoading" class="yo-file__netdisk">
         <el-table :data="netDiskFiles" height="400px" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" />
           <el-table-column :label="t('file.netDiskFileName')" min-width="200">
             <template #default="{ row }">
-              <div class="file-name-cell">
-                <img class="cell-file-icon" :src="getFileIcon(row)" alt="icon" />
+              <div class="yo-file__netdisk-name">
+                <img class="yo-file__netdisk-icon" :src="getFileIcon(row)" alt="icon" />
                 <span>{{ row.name }}</span>
               </div>
             </template>
@@ -183,7 +183,7 @@
         </el-table>
       </div>
       <template #footer>
-        <span class="dialog-footer">
+        <span class="yo-file__dialog-footer">
           <el-button @click="netDiskVisible = false">{{ t('common.cancel') }}</el-button>
           <el-button type="primary" :disabled="selectedNetFiles.length === 0" @click="handleNetDiskConfirm">
             {{ t('file.confirmCount', { count: selectedNetFiles.length }) }}
@@ -762,10 +762,6 @@ const itemWidth = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
 .yo-file {
   width: 100%;
 
@@ -780,44 +776,44 @@ const itemWidth = computed(() => {
     flex-wrap: wrap;
     gap: 12px;
 
-    .yo-file-item {
+    .yo-file__item {
       flex: 1;
     }
 
-    .yo-file-uploader {
+    .yo-file__uploader {
       margin-bottom: 0;
     }
 
-    .yo-file-list-wrapper {
+    .yo-file__list-wrap {
       margin-top: 0;
       flex: 1;
       min-width: 0;
     }
 
-    .yo-file-list {
+    .yo-file__list {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
       gap: 8px;
     }
 
-    .yo-file-item {
+    .yo-file__item {
       margin-bottom: 0;
       width: auto;
       min-width: 260px;
     }
 
-    .yo-custom-picture-list {
+    .yo-file__picture-list {
       order: 2;
     }
 
-    .yo-file-uploader {
+    .yo-file__uploader {
       order: 1;
       width: fit-content !important;
       flex: none !important;
     }
 
-    .yo-file-list-wrapper {
+    .yo-file__list-wrap {
       order: 3;
     }
   }
@@ -832,19 +828,19 @@ const itemWidth = computed(() => {
     flex: 1;
     min-width: 0;
 
-    .yo-file-uploader {
+    .yo-file__uploader {
       margin-bottom: 0;
       width: fit-content !important;
       flex: none !important;
       order: 1;
     }
 
-    .yo-net-disk-btn {
+    .yo-file__netdisk-btn {
       order: 2;
       margin-left: 0;
     }
 
-    .yo-file-list-wrapper {
+    .yo-file__list-wrap {
       order: 3;
       flex-basis: 100%;
       width: 100%;
@@ -854,36 +850,36 @@ const itemWidth = computed(() => {
     }
   }
 
-  .yo-net-disk-btn {
+  .yo-file__netdisk-btn {
     margin-left: 12px;
   }
 
-  .yo-file-list-vertical {
+  .yo-file__list--vertical {
     display: flex;
     gap: 10px;
 
-    .yo-file-item-vertical {
+    .yo-file__item--vertical {
       width: v-bind(itemWidth);
     }
   }
 }
 
-.file-name-cell {
+.yo-file__netdisk-name {
   display: flex;
   align-items: center;
   gap: 8px;
 
-  .cell-file-icon {
+  .yo-file__netdisk-icon {
     width: 24px;
     height: 28px;
   }
 }
 
-.yo-net-disk-container {
+.yo-file__netdisk {
   min-height: 400px;
 }
 
-.non-image-thumbnail {
+.yo-file__thumb-fallback {
   width: 100%;
   height: 100%;
   display: flex;
@@ -895,14 +891,14 @@ const itemWidth = computed(() => {
   box-sizing: border-box;
 }
 
-.non-image-thumbnail .grid-file-icon {
+.yo-file__thumb-fallback .yo-file__thumb-icon {
   width: v-bind(iconWidth);
   height: v-bind(iconHeight);
   margin-bottom: 8px;
   object-fit: contain;
 }
 
-.non-image-thumbnail .grid-file-name {
+.yo-file__thumb-fallback .yo-file__thumb-name {
   font-size: 12px;
   color: #606266;
   text-align: center;
@@ -912,7 +908,7 @@ const itemWidth = computed(() => {
   text-overflow: ellipsis;
 }
 
-.yo-custom-picture-list {
+.yo-file__picture-list {
   // display: inline-flex; 
   display: flex;
   vertical-align: top;
@@ -928,13 +924,13 @@ const itemWidth = computed(() => {
   }
 }
 
-.yo-file-uploader.avatar-uploader {
+.yo-file__uploader.yo-file__uploader--picture {
   display: inline-block;
   vertical-align: top;
   flex: none !important;
 }
 
-.avatar-uploader :deep(.ep-upload) {
+.yo-file__uploader--picture :deep(.ep-upload) {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
@@ -943,16 +939,16 @@ const itemWidth = computed(() => {
   transition: border-color 0.3s;
 }
 
-.avatar-uploader :deep(.ep-upload):hover {
+.yo-file__uploader--picture :deep(.ep-upload):hover {
   border-color: var(--primary-color);
 }
 
-.yo-file-uploader.avatar-uploader :deep(.ep-upload) {
+.yo-file__uploader.yo-file__uploader--picture :deep(.ep-upload) {
   width: 100%;
   height: 100%;
 }
 
-.avatar-uploader-icon {
+.yo-file__uploader-icon {
   font-size: 28px;
   color: #8c939d;
   width: 100%;
@@ -965,7 +961,7 @@ const itemWidth = computed(() => {
 
 
 
-.yo-add-text {
+.yo-file__uploader-text {
   position: absolute;
   width: 100%;
   top: 70%;
@@ -974,12 +970,12 @@ const itemWidth = computed(() => {
   text-align: center;
 }
 
-.yo-file-list {
+.yo-file__list {
   &:first-child {
     margin-top: 8px;
   }
 
-  .yo-file-item {
+  .yo-file__item {
     display: flex;
     align-items: center;
     padding: 8px 12px;
@@ -995,21 +991,21 @@ const itemWidth = computed(() => {
       background-color: #e4e7ed;
     }
 
-    .file-icon-img {
+    .yo-file__icon {
       width: 28px;
       height: 34px;
       margin-right: 12px;
       flex-shrink: 0;
     }
 
-    .file-info {
+    .yo-file__info {
       display: flex;
       flex-direction: column;
       flex: 1;
       overflow: hidden;
     }
 
-    .file-name {
+    .yo-file__filename {
       font-size: 14px;
       color: #535559;
       overflow: hidden;
@@ -1018,62 +1014,62 @@ const itemWidth = computed(() => {
       line-height: 1;
     }
 
-    .file-size {
+    .yo-file__size {
       font-size: 12px;
       color: #A8A9AB;
       margin-top: 4px;
       line-height: 1;
     }
 
-    .file-actions {
+    .yo-file__actions {
       display: flex;
       gap: 16px;
       margin-left: 16px;
     }
   }
 
-  .yo-file-item-vertical {}
+  .yo-file__item--vertical {}
 
 }
 
 
-.file-info-container {
+.yo-file__item-main {
   display: flex;
   flex: 1;
   align-items: center;
   overflow: hidden;
 }
 
-.yo-file-table-container {
+.yo-file__attach {
   margin-top: 16px;
 }
 
-.yo-file-table-header {
+.yo-file__attach-head {
   display: flex;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.header-indicator {
+.yo-file__attach-indicator {
   width: 3px;
   height: 14px;
   background-color: var(--primary-color);
   margin-right: 6px;
 }
 
-.header-title {
+.yo-file__attach-title {
   font-size: 14px;
   font-weight: bold;
   color: #303133;
 }
 
-.yo-file-table {
+.yo-file__attach-table {
   border: 1px solid #ebeef5;
   border-radius: 4px;
   overflow: hidden;
 }
 
-.table-header {
+.yo-file__attach-header {
   display: flex;
   background-color: #FAFAFA;
   padding: 10px 16px;
@@ -1082,7 +1078,7 @@ const itemWidth = computed(() => {
   color: #909399;
 }
 
-.table-row {
+.yo-file__attach-row {
   display: flex;
   padding: 12px 16px;
   align-items: center;
@@ -1091,112 +1087,112 @@ const itemWidth = computed(() => {
   color: #606266;
 }
 
-.table-row:last-child {
+.yo-file__attach-row:last-child {
   border-bottom: none;
 }
 
-.col-name {
+.yo-file__col--name {
   flex: 3;
   overflow: hidden;
 }
 
-.col-size {
+.yo-file__col--size {
   flex: 1;
   color: #909399;
 }
 
-.col-status {
+.yo-file__col--status {
   flex: 1;
 }
 
-.col-action {
+.yo-file__col--action {
   flex: 1;
   text-align: center;
 }
 
-.file-name-container {
+.yo-file__name {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.file-name-container:hover .row-file-name {
+.yo-file__name:hover .yo-file__row-name {
   color: var(--primary-color);
 }
 
-.row-file-icon {
+.yo-file__row-icon {
   width: 24px;
   height: 28px;
   margin-right: 8px;
 }
 
-.row-file-name {
+.yo-file__row-name {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.status-success {
+.yo-file__status--success {
   color: #67C23A;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.status-error {
+.yo-file__status--error {
   color: #F56C6C;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.status-ready {
+.yo-file__status--ready {
   color: #909399;
 }
 
-.yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload) {
+.yo-file__uploader:not(.yo-file__uploader--picture) :deep(.ep-upload) {
   display: block;
 }
 
-.yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload-dragger) {
+.yo-file__uploader:not(.yo-file__uploader--picture) :deep(.ep-upload-dragger) {
   padding: 30px 0;
   background-color: #F8F9FA;
   border: 1px dashed #DCDFE6;
   border-radius: 4px;
 }
 
-.yo-file-uploader:not(.avatar-uploader) :deep(.ep-upload-dragger:hover) {
+.yo-file__uploader:not(.yo-file__uploader--picture) :deep(.ep-upload-dragger:hover) {
   border-color: var(--primary-color);
   background-color: #F0F7FF;
 }
 
-.yo-drag-inner {
+.yo-file__drag {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.yo-drag-icon-img {
+.yo-file__drag-icon {
   width: 32px;
   height: 32px;
   margin-bottom: 8px;
 }
 
-.yo-drag-title {
+.yo-file__drag-title {
   font-size: 14px;
   color: #303133;
   line-height: 20px;
   margin-bottom: 4px;
 }
 
-.yo-drag-sub {
+.yo-file__drag-hint {
   font-size: 12px;
   color: #909399;
   line-height: 18px;
 }
 
-.video-player-container {
+.yo-file__player {
   width: 100%;
   height: 450px;
   background-color: #000;
@@ -1207,7 +1203,7 @@ const itemWidth = computed(() => {
 :deep(.ep-dialog__body) {
   padding: 0;
 }
-.yo-file-upload-btn {
+.yo-file__upload-btn {
     width: fit-content;
 }
 </style>

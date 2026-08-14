@@ -8,10 +8,10 @@ $margin-right: 9px;
     font-size: var(--font-size-lg);
     line-height: $line-height-lg;
 
-    &-level-1 {
+    &--level-1 {
         color: var(--title-color-level-1);
 
-        .title-flag {
+        .yo-title__flag {
             display: block;
             width: $width;
             height: $height;
@@ -21,11 +21,11 @@ $margin-right: 9px;
         }
     }
 
-    &-level-2 {
+    &--level-2 {
         color: var(--title-color-level-2);
     }
 
-    &-level-3 {
+    &--level-3 {
         color: var(--title-color-level-3);
     }
 }

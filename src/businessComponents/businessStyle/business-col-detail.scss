@@ -1,24 +1,19 @@
-.row_container {
+.yo-detail-col {
     width: 100%;
+}
+
+.yo-detail-col__row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 0 40px;
 
     &:last-child {
         margin-bottom: 0;
     }
 }
 
-.grid-row {
-    display: grid;
-    grid-template-columns: repeat(24, 1fr);
-    gap: 0 40px;
-}
-
-.flex-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0; // Use span-based width calculation
-}
-
-.col_content_box {
+.yo-detail-col__item {
     display: flex;
     align-items: flex-end;
     width: 100%;
@@ -26,14 +21,14 @@
     margin-bottom: 18px;
 
     &.is-underline {
-        .value_w {
+        .yo-detail-col__value {
             border-bottom: 1px solid var(--detail-underline-color, #ccc);
             padding-bottom: 10px;
         }
     }
 }
 
-.detail_label {
+.yo-detail-col__label {
     display: inline-block;
     flex-shrink: 0;
     margin-right: 12px;
@@ -41,35 +36,33 @@
     font-size: var(--font-size-base);
     word-break: break-all;
 
-
-    &.align-start {
+    &.is-align-start {
         text-align: left;
     }
 
-    &.align-center {
+    &.is-align-center {
         text-align: center;
     }
 
-    &.align-end {
+    &.is-align-end {
         text-align: right;
     }
 }
 
-.value_w {
+.yo-detail-col__value {
     flex: 1;
     min-width: 0;
     word-break: break-all;
-    /* 允许长内容换行 */
 
-    &.align-start {
+    &.is-align-start {
         text-align: left;
     }
 
-    &.align-center {
+    &.is-align-center {
         text-align: center;
     }
 
-    &.align-end {
+    &.is-align-end {
         text-align: right;
     }
 

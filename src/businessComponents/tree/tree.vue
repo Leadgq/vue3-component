@@ -1,6 +1,6 @@
 <template>
-    <div class="yo-tree-wrap" v-loading="loading">
-        <div v-if="showSearch" class="yo-tree-search-wrap">
+    <div class="yo-tree" v-loading="loading">
+        <div v-if="showSearch" class="yo-tree__search">
             <el-input v-model="filterText" :placeholder="searchPlaceholder || t('tree.filter')" clearable v-if="showFilter">
                 <template #prefix>
                     <el-icon>
@@ -8,46 +8,46 @@
                     </el-icon>
                 </template>
             </el-input>
-            <div v-if="showActions" class="yo-tree-actions">
+            <div v-if="showActions" class="yo-tree__actions">
                 <el-tooltip :content="t('tree.expandAll')" placement="top">
-                    <el-icon class="action-icon" @click="toggleExpandAll(true)">
+                    <el-icon class="yo-tree__action-icon" @click="toggleExpandAll(true)">
                         <Expand />
                     </el-icon>
                 </el-tooltip>
                 <el-tooltip :content="t('tree.collapseAll')" placement="top">
-                    <el-icon class="action-icon" @click="toggleExpandAll(false)">
+                    <el-icon class="yo-tree__action-icon" @click="toggleExpandAll(false)">
                         <Fold />
                     </el-icon>
                 </el-tooltip>
                 <el-tooltip v-if="showCheckbox" :content="t('tree.checkAll')" placement="top">
-                    <el-icon class="action-icon" @click="checkAll(true)">
+                    <el-icon class="yo-tree__action-icon" @click="checkAll(true)">
                         <Checked />
                     </el-icon>
                 </el-tooltip>
                 <el-tooltip v-if="showCheckbox" :content="t('tree.uncheckAll')" placement="top">
-                    <el-icon class="action-icon" @click="checkAll(false)">
+                    <el-icon class="yo-tree__action-icon" @click="checkAll(false)">
                         <Delete />
                     </el-icon>
                 </el-tooltip>
                 <el-tooltip :content="t('tree.refresh')" placement="top">
-                    <el-icon class="action-icon" @click="loadData">
+                    <el-icon class="yo-tree__action-icon" @click="loadData">
                         <Refresh />
                     </el-icon>
                 </el-tooltip>
             </div>
         </div>
-        <div class="yo-tree-content" :style="{ maxHeight: scrollHeight }">
+        <div class="yo-tree__content" :style="{ maxHeight: scrollHeight }">
             <el-tree ref="treeRef" :data="displayData" :props="treeProps" :node-key="nodeKey"
                 :show-checkbox="showCheckbox" :filter-node-method="filterNode" v-bind="treeAttrs" @check="handleCheck"
                 @node-click="handleNodeClick">
                 <template #default="{ node, data }">
-                    <span class="yo-tree-node-content">
+                    <span class="yo-tree__node">
                         <slot name="prefix" :node="node" :data="data"></slot>
-                        <span class="node-label"
+                        <span class="yo-tree__node-label"
                             :class="{ 'is-highlight': filterText && node.label.includes(filterText) }">
                             {{ node.label }}
                         </span>
-                        <span class="node-actions">
+                        <span class="yo-tree__node-actions">
                             <slot name="extra" :node="node" :data="data"></slot>
                         </span>
                     </span>
@@ -242,7 +242,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.yo-tree-wrap {
+.yo-tree {
     background: #fff;
     border-radius: 8px;
     padding: 16px;
@@ -256,7 +256,7 @@ defineExpose({
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
 
-    .yo-tree-search-wrap {
+    .yo-tree__search {
         display: flex;
         align-items: center;
         gap: 12px;
@@ -278,13 +278,13 @@ defineExpose({
             }
         }
 
-        .yo-tree-actions {
+        .yo-tree__actions {
             display: flex;
             align-items: center;
             gap: 8px;
             color: #909399;
 
-            .action-icon {
+            .yo-tree__action-icon {
                 font-size: 18px;
                 cursor: pointer;
                 padding: 4px;
@@ -299,37 +299,7 @@ defineExpose({
         }
     }
 
-    .yo-tree-selection-summary {
-        font-size: 13px;
-        color: #606266;
-        padding: 8px 12px;
-        background: #f0f9eb;
-        border-radius: 4px;
-        border-left: 4px solid #67c23a;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        span {
-            color: #67c23a;
-            font-weight: bold;
-            margin: 0 2px;
-        }
-
-        .clear-selection {
-            color: #909399;
-            cursor: pointer;
-            font-weight: normal;
-            font-size: 12px;
-
-            &:hover {
-                color: #f56c6c;
-                text-decoration: underline;
-            }
-        }
-    }
-
-    .yo-tree-content {
+    .yo-tree__content {
         overflow-y: auto;
         padding-right: 4px;
 
@@ -356,7 +326,7 @@ defineExpose({
                 transition: padding 0.2s;
 
                 &:hover {
-                    .node-actions {
+                    .yo-tree__node-actions {
                         opacity: 1;
                     }
                 }
@@ -370,7 +340,7 @@ defineExpose({
         }
     }
 
-    .yo-tree-node-content {
+    .yo-tree__node {
         flex: 1;
         display: flex;
         align-items: center;
@@ -379,7 +349,7 @@ defineExpose({
         color: #475166;
         padding-right: 8px;
 
-        .node-label {
+        .yo-tree__node-label {
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -393,7 +363,7 @@ defineExpose({
             }
         }
 
-        .node-actions {
+        .yo-tree__node-actions {
             opacity: 0;
             transition: opacity 0.2s;
             display: flex;

@@ -1,5 +1,5 @@
 <template>
-    <div class="yo-table-wrap">
+    <div class="yo-table">
         <el-table ref="tableRef" :data="displayData" v-loading="loading" v-bind="tableAttrs" :row-key="rowKey"
             :span-method="resolvedSpanMethod">
             <template #empty>
@@ -15,10 +15,10 @@
                 min-width="100" />
             <slot></slot>
         </el-table>
-        <div class="yo-table-pagination" v-if="isShowPagination">
+        <div class="yo-table__pagination" v-if="isShowPagination">
             <el-pagination v-model:current-page="innerPagination.pageNum" v-model:page-size="innerPagination.pageSize"
                 :page-sizes="paginSize" :total="innerPagination.total" :layout="layout" append-size-to="body"
-                @current-change="handlePageChange" @size-change="handleSizeChange"  popper-class="my-pagination-popper"/>
+                @current-change="handlePageChange" @size-change="handleSizeChange" popper-class="yo-table__pagination-popper"/>
         </div>
     </div>
 </template>
@@ -204,30 +204,30 @@ const TableColumn = (colProps) => {
     if (props.showSetting && isSettingColumn(col)) {
         colSlots.header = (scope) => (
             <div
-                class={['plus-flex align-center pointer header-setting-wrap',
+                class={['yo-table__setting plus-flex align-center',
                     col.align === 'right' ? 'flex-end' : col.align === 'center' ? 'justify-center' : '']}
             >
                 <span>{scope.column.label}</span>
                 {col.type !== 'expand' && (
-                    <ElPopover placement="bottom-end" width={200} trigger="click" popper-class="yo-table-setting-popover" persistent={false}>
+                    <ElPopover placement="bottom-end" width={200} trigger="click" popper-class="yo-setting-popover" persistent={false}>
                         {{
                             reference: () => (
-                                <ElIcon class="setting-icon cursor-pointer" size={16} onClick={(e) => e.stopPropagation()}>
+                                <ElIcon class="yo-table__setting-icon cursor-pointer" size={16} onClick={(e) => e.stopPropagation()}>
                                     <Setting />
                                 </ElIcon>
                             ),
                             default: () => (
-                                <div class="setting-content">
-                                    <div class="plus-flex align-center setting-title">
-                                        <span class="tips">{t('table.columnSetting')}</span>
-                                        <ElIcon class="pointer cursor-pointer" style="margin-left: 8px;" onClick={resetColumns} title={t('table.resetColumns')}>
+                                <div class="yo-setting-popover__content">
+                                    <div class="yo-setting-popover__title plus-flex align-center">
+                                        <span class="yo-setting-popover__tips">{t('table.columnSetting')}</span>
+                                        <ElIcon class="yo-setting-popover__reset cursor-pointer" style="margin-left: 8px;" onClick={resetColumns} title={t('table.resetColumns')}>
                                             <Refresh />
                                         </ElIcon>
                                     </div>
-                                    <div class="setting-list">
+                                    <div class="yo-setting-popover__list">
                                         <ElCheckboxGroup v-model={visibleKeys.value}>
                                             {settingColsList.value.map(item => (
-                                                <div key={item.prop || item.label} class="setting-item">
+                                                <div key={item.prop || item.label} class="yo-setting-popover__item">
                                                     <ElCheckbox label={item.prop || item.label}>
                                                         {item.label}
                                                     </ElCheckbox>
@@ -541,7 +541,7 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.yo-table-wrap {
+.yo-table {
     width: 100%;
     background-color: #fff;
 
@@ -550,23 +550,19 @@ defineExpose({
     }
 }
 
-.yo-table-pagination {
+.yo-table__pagination {
     margin-top: 16px;
     display: flex;
     justify-content: flex-end;
     padding-bottom: 20px;
     padding-right: 20px;
-
-    .yo-table-pagination {
-        background-color: #fff;
-    }
 }
 
-.header-setting-wrap {
+.yo-table__setting {
     width: 100%;
     color: #333;
 
-    .setting-icon {
+    .yo-table__setting-icon {
         color: #9A9A9A;
         transition: color 0.3s;
         margin-left: 15px;
@@ -581,34 +577,28 @@ defineExpose({
 </style>
 
 <style lang="scss">
-.yo-table-setting-popover {
+.yo-setting-popover {
     padding: 12px 0 !important;
 
+    .yo-setting-popover__tips,
+    .yo-setting-popover__reset {
+        color: #BDC1CC;
+    }
 
-    .setting-content {
-        .tips {
-            color: #BDC1CC;
-        }
+    .yo-setting-popover__title {
+        padding: 0 16px 8px 16px;
+        border-bottom: 1px solid #ebeef5;
+        margin-bottom: 8px;
+    }
 
-        .pointer {
-            color: #BDC1CC;
-        }
+    .yo-setting-popover__list {
+        max-height: 250px;
+        overflow-y: auto;
+        padding: 0 16px;
+    }
 
-        .setting-title {
-            padding: 0 16px 8px 16px;
-            border-bottom: 1px solid #ebeef5;
-            margin-bottom: 8px;
-        }
-
-        .setting-list {
-            max-height: 250px;
-            overflow-y: auto;
-            padding: 0 16px;
-
-            .setting-item {
-                padding: 4px 0;
-            }
-        }
+    .yo-setting-popover__item {
+        padding: 4px 0;
     }
 }
 </style>

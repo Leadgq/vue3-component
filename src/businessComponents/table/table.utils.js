@@ -40,7 +40,7 @@ export const renderCell = (row, col, index) => {
         const unit = unitCfg?.fix ? unitCfg.key : row[unitCfg?.key]
 
         // 使用 h 函数构建原有的 HTML 结构
-        return h('div', { class: 'otw' }, [
+        return h('div', { class: 'yo-table__cell-text' }, [
             h('span', {}, `${formattedMoney} ${unit || ''}`)
         ])
     }

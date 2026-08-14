@@ -1,12 +1,12 @@
 <template>
     <div class="yo-detail-col">
         <template v-for="(li, ind) in rowData" :key="ind">
-            <div :class="['row_container', 'grid-row']">
+            <div class="yo-detail-col__row">
                 <template v-for="(newLi, newIndex) in li" :key="newIndex">
-                    <div :class="['col_content_box', isUnderClass(newLi)]" v-if="isShowItem(newLi)"
+                    <div :class="['yo-detail-col__item', isUnderClass(newLi)]" v-if="isShowItem(newLi)"
                         :style="getItemStyle(newLi)">
                         <RenderBefore v-if="newLi.before" :before="newLi.before" :data="newLi" />
-                        <span :class="['detail_label', 'align-' + (getAlign(newLi.labelAlign) || labelAlignVal)]"
+                        <span :class="['yo-detail-col__label', 'is-align-' + (getAlign(newLi.labelAlign) || labelAlignVal)]"
                             v-show="newLi.title" :style="{
                                 width: newLi.labelWidth ? newLi.labelWidth : props.labelWidth + 'px',
                                 marginRight: newLi.space ? newLi.space : props.space + 'px',
@@ -14,7 +14,7 @@
                             }" v-html="getHtml(newLi.title)">
                         </span>
                         <RenderMiddle v-if="newLi.middle" :middle="newLi.middle" :data="newLi" />
-                        <div :class="['value_w', 'align-' + (getAlign(newLi.valueAlign) || valueAlignVal)]">
+                        <div :class="['yo-detail-col__value', 'is-align-' + (getAlign(newLi.valueAlign) || valueAlignVal)]">
                             <RenderCell v-if="newLi.render" :render="newLi.render" :data="newLi" />
                             <template v-else>
                                 <div v-html="newLi.value" :style="{ backgroundColor: getBackgroundColor() }"></div>

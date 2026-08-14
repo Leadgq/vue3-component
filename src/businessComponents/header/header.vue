@@ -1,12 +1,13 @@
 <template>
-    <div class="yo-header-wrap">
-        <div id="common_header" class="my-header">
+    <div class="yo-header">
+        <!-- my-header / my-header-float：主应用滚动时会挂 class，属宿主约定，不要删 -->
+        <div id="common_header" class="yo-header__bar my-header">
             <YoTitle v-if="title != ''" :content="title" :titleLevel="1">
                 <template v-if="$slots.second" #second>
                     <slot name="second"></slot>
                 </template>
             </YoTitle>
-            <section class="my-header__action plus-flex align-center">
+            <section class="yo-header__action plus-flex align-center">
                 <slot name="action"></slot>
                 <YoButton v-if="isShowBack" @click="handleClick">
                     <el-icon>
@@ -56,11 +57,11 @@ function handleClick() {
 </script>
 
 <style lang="scss" scoped>
-.yo-header-wrap {
+.yo-header {
     width: 100%;
 }
 
-.my-header {
+.yo-header__bar {
     width: 100%;
     height: 46px;
     background-color: #fff;
@@ -77,14 +78,14 @@ function handleClick() {
     z-index: 100;
 }
 
-.my-header__action {
+.yo-header__action {
     flex-shrink: 0;
     gap: 8px;
     margin-left: 12px;
 }
 
 /* 主应用滚动时会挂上此类：补全 fixed，并避免 width:100% + left 把右侧按钮顶出视口 */
-.my-header.my-header-float {
+.yo-header__bar.my-header-float {
     position: fixed;
     top: 70px;
     left: 250px;

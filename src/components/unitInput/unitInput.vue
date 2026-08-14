@@ -1,8 +1,8 @@
 <template>
   <div class="yo-unit-input" :class="{ 'is-disabled': disabled }">
-    <el-input v-bind="inputAttrs" v-model="modelValue" :disabled="disabled" class="unit-input-inner">
+    <el-input v-bind="inputAttrs" v-model="modelValue" :disabled="disabled" class="yo-unit-input__field">
       <template #append>
-        <el-select v-model="unitValue" :disabled="disabled" :placeholder="unitPlaceholder" class="unit-select-inner"
+        <el-select v-model="unitValue" :disabled="disabled" :placeholder="unitPlaceholder" class="yo-unit-input__unit"
           :style="{ width: unitWidth + 'px' }" v-bind="selectAttrs">
           <template v-for="(_, name) in selectSlots" #[name]="slotData">
             <slot :name="'unit-' + name" v-bind="slotData" />
@@ -158,14 +158,14 @@ watchEffect(async () => {
   }
 
   /* 针对 Element Plus 不同版本的兼容写法 (el-input__wrapper 或 ep-select__wrapper) */
-  :deep(.unit-select-inner .ep-select__wrapper),
-  :deep(.unit-select-inner .ep-input__wrapper) {
+  :deep(.yo-unit-input__unit .ep-select__wrapper),
+  :deep(.yo-unit-input__unit .ep-input__wrapper) {
     box-shadow: none !important;
     background-color: transparent !important;
     border: none !important;
   }
 
-  :deep(.unit-select-inner .ep-input__inner) {
+  :deep(.yo-unit-input__unit .ep-input__inner) {
     text-align: center;
   }
 

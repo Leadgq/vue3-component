@@ -1,15 +1,15 @@
 <template>
   <div class="yo-material-file">
-    <el-form-item v-for="(item, index) in modelValue" :key="item.MaterialId || index" class="material-row"
+    <el-form-item v-for="(item, index) in modelValue" :key="item.MaterialId || index" class="yo-material-file__row"
       v-bind="attrs" :prop="parentProp ? `${parentProp}.${index}.Files` : ''"
       :rules="item.IsRequired ? [{ required: true, message: t('material.uploadRequired', { name: item.MaterialName }), trigger: 'change' }] : []">
       <!-- 左侧: label -->
       <template #label>
-        <div class="material-label-container">
-          <span class="label-text">{{ item.MaterialName }}</span>
+        <div class="yo-material-file__label">
+          <span class="yo-material-file__label-text">{{ item.MaterialName }}</span>
           <template v-if="item.ExcelTempId">
-            <div v-for="(tempId, subIndex) in splitIds(item.ExcelTempId)" :key="tempId" class="template-down">
-              <el-button type="link" size="small" class="template-btn" @click="handleDownloadTemplate(tempId, index)">
+            <div v-for="(tempId, subIndex) in splitIds(item.ExcelTempId)" :key="tempId" class="yo-material-file__template">
+              <el-button type="link" size="small" class="yo-material-file__template-btn" @click="handleDownloadTemplate(tempId, index)">
                 {{ t('material.templateDownload') }} {{ splitIds(item.ExcelTempId).length > 1 ? (subIndex + 1) : '' }}
               </el-button>
             </div>
@@ -18,25 +18,25 @@
       </template>
 
       <!-- 右侧：文件内容 -->
-      <div class="material-content">
+      <div class="yo-material-file__content">
 
         <!-- 合同签署模式 (Channel 10) -->
         <template v-if="signContractChannel === 10">
-          <div class="contract-view-container">
+          <div class="yo-material-file__contract">
             <el-button type="primary" size="small" @click="handleViewContract(index)">{{ t('common.view') }}</el-button>
             <YoImg :ref="el => (contractPreviewRefs[index] = el)" :ids="splitIds(item.ExcelSignTempId)" :apiUrl="apiUrl"
-              class="hidden-preview" />
+              class="yo-material-file__preview-hidden" />
           </div>
         </template>
 
         <template v-else-if="readOnly || item.isUpload === false || item.readOnly">
           <!-- 有文件：只读展示 -->
           <YoFile v-if="hasFiles(item)" v-bind="$attrs" :layout="layout" v-model:ids="item.Files"
-            :fileLimit="item.MaxCount" :readOnly="true" :apiUrl="apiUrl" :isShowTip="false" class="inline-yo-file"
+            :fileLimit="item.MaxCount" :readOnly="true" :apiUrl="apiUrl" :isShowTip="false" class="yo-material-file__file"
             :uploadType="item.UploadType" />
           <!-- 无文件：暂无文件提示 -->
-          <div v-else class="no-file-tag">
-            <el-icon class="no-file-icon">
+          <div v-else class="yo-material-file__empty">
+            <el-icon class="yo-material-file__empty-icon">
               <InfoFilled />
             </el-icon>
             <span>{{ t('empty.noFile') }}</span>
@@ -45,7 +45,7 @@
 
         <YoFile v-else v-bind="$attrs" :layout="layout" v-model:ids="item.Files" :fileLimit="item.MaxCount"
           :readOnly="false" :apiUrl="apiUrl" :isShowTip="false" :uploadBtnName="uploadBtnName"
-          :uploadType="item.UploadType" :class="hasFiles(item) ? 'inline-yo-file' : ''" />
+          :uploadType="item.UploadType" :class="hasFiles(item) ? 'yo-material-file__file' : ''" />
 
       </div>
       <FileView ref="fileViewRef"></FileView>
@@ -180,25 +180,24 @@ onMounted(() => {
   flex-direction: column;
   background-color: #fff;
 
-  .material-row {
+  .yo-material-file__row {
     padding: 8px 0;
 
-    .material-label-container {
+    .yo-material-file__label {
       display: flex;
       flex-direction: column;
       line-height: 1.4;
       margin-top: 4px;
 
-      .label-text {
-        // font-weight: bold;
+      .yo-material-file__label-text {
         color: #6a7998;
       }
 
-      .template-down {
+      .yo-material-file__template {
         margin-top: 2px;
       }
 
-      .template-btn {
+      .yo-material-file__template-btn {
         padding: 0;
         height: auto;
         font-size: 12px;
@@ -208,7 +207,7 @@ onMounted(() => {
       }
     }
 
-    .material-content {
+    .yo-material-file__content {
       width: 100%;
       min-height: 32px;
       display: flex;
@@ -217,12 +216,12 @@ onMounted(() => {
   }
 
   /* 覆盖嵌套 yo-file 的列表样式 */
-  .inline-yo-file ::v-deep {
-    .yo-file-list-wrapper {
+  .yo-material-file__file ::v-deep {
+    .yo-file__list-wrap {
       margin-top: 0;
     }
 
-    .yo-file-item {
+    .yo-file__item {
       background-color: #f5f7fa;
       border-radius: 4px;
       padding: 6px 16px;
@@ -239,18 +238,18 @@ onMounted(() => {
         margin-bottom: 0;
       }
 
-      .file-info-container {
+      .yo-file__item-main {
         flex: 1;
         display: flex;
         align-items: center;
 
-        .file-icon-img {
+        .yo-file__icon {
           width: 18px;
           height: 18px;
           margin-right: 10px;
         }
 
-        .file-name {
+        .yo-file__filename {
           color: #333;
           font-size: 14px;
           max-width: 400px;
@@ -259,14 +258,14 @@ onMounted(() => {
           white-space: nowrap;
         }
 
-        .file-size {
+        .yo-file__size {
           color: #999;
           font-size: 12px;
           margin-left: 8px;
         }
       }
 
-      .file-actions {
+      .yo-file__actions {
         display: flex;
         gap: 16px;
 
@@ -306,8 +305,7 @@ onMounted(() => {
     }
   }
 
-  /* "暂无文件"标签 */
-  .no-file-tag {
+  .yo-material-file__empty {
     display: inline-flex;
     align-items: center;
     padding: 2px 10px;
@@ -317,13 +315,13 @@ onMounted(() => {
     font-size: 13px;
     gap: 6px;
 
-    .no-file-icon {
+    .yo-material-file__empty-icon {
       font-size: 14px;
       color: #b0b4bb;
     }
   }
 
-  .hidden-preview {
+  .yo-material-file__preview-hidden {
     height: 0;
     overflow: hidden;
     position: absolute;

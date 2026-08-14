@@ -14,11 +14,11 @@
                 <slot v-if="item.isSlot" :name="item.prop" :item="item" :model="model"></slot>
 
                 <!-- 2. 嵌套渲染 -->
-                <div v-else-if="item.children" class="yo-form-composite">
+                <div v-else-if="item.children" class="yo-form__composite">
                     <template v-for="child in item.children" :key="child.prop">
 
                         <el-form-item v-if="child.prop" :prop="child.prop" :rules="getRules(child)"
-                            v-bind="child.formItemProps || {}" class="yo-form-child-item">
+                            v-bind="child.formItemProps || {}" class="yo-form__child">
 
                             <slot v-if="child.isSlot" :name="child.prop" :item="child" :model="model"></slot>
 
@@ -50,7 +50,7 @@
         <slot></slot>
 
         <!-- 表单操作按钮插槽，不属于 form 配置项 -->
-        <div v-if="$slots.footer" class="yo-form-footer" :style="{ textAlign: footerAlign }">
+        <div v-if="$slots.footer" class="yo-form__footer" :style="{ textAlign: footerAlign }">
             <slot name="footer"></slot>
         </div>
     </el-form>
@@ -247,13 +247,13 @@ defineExpose({
     width: 100%;
 }
 
-.yo-form-footer {
+.yo-form__footer {
     grid-column: 1 / -1;
     /* 占据所有列，使其独立于表单项 */
     width: 100%;
 }
 
-.yo-form-composite {
+.yo-form__composite {
     display: flex;
     gap: 8px;
     width: 100%;

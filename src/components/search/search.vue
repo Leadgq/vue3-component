@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isSearchModel" class="search-input-plus" :style="{ width: width }">
+    <div v-if="isSearchModel" class="yo-search" :style="{ width: width }">
         <YoInput v-model="searchValue" :placeholder="placeholder || t('search.placeholder')" v-bind="attrs" :type="type">
             <template #prefix>
                 <el-icon>
@@ -79,7 +79,7 @@ const handleAdvancedSearch = () => emit("advancedSearch")
 </script>
 
 <style lang="scss" scoped>
-.search-input-plus {
+.yo-search {
   /* 与右侧「高级搜索」按钮同高 */
   --yo-search-height: 38px;
   display: inline-block;

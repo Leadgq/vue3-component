@@ -1,11 +1,11 @@
 <template>
-    <div class="yo-content" :class="{ 'with-side': slots.side }">
-        <YoTitle v-if="title != ''" :content="title" :titleLevel="1" class="title">
+    <div class="yo-content" :class="{ 'yo-content--with-side': slots.side }">
+        <YoTitle v-if="title != ''" :content="title" :titleLevel="1" class="yo-content__title">
             <template v-if="$slots.second" #second>
                 <slot name="second"></slot>
             </template>
         </YoTitle>
-        <div id="contentMain" class="my-content__main">
+        <div id="contentMain" class="yo-content__main">
             <slot></slot>
         </div>
     </div>
@@ -35,11 +35,11 @@ const props = defineProps({
     padding-bottom: 20px;
     margin-bottom: 16px;
 
-    .title {
+    .yo-content__title {
         padding-left: 20px;
     }
 
-    .my-content__main {
+    .yo-content__main {
         width: 100%;
         box-sizing: border-box;
         padding-left: 32px;

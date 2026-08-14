@@ -1,6 +1,6 @@
     <template>
         <div class="yo-grid">
-            <YoQuery ref="queryRef" :class="{ 'query-info': tabsProps.prop && tabsProps.config.length > 0 }"
+            <YoQuery ref="queryRef" :class="{ 'yo-grid__query': tabsProps.prop && tabsProps.config.length > 0 }"
                 v-bind="queryProps" v-model:is-show-super-search-area="isShowSuperSearchArea" :model="query.model"
                 :config="query.config" @search="handleSearch" @reload="handleReload" @quick-search="handleQuickSearch"
                 :quick-search-key="queryProps.quickSearchKey" :showSetting="queryProps.showSetting">
@@ -8,11 +8,11 @@
                     <slot :name="name" v-bind="slotData"></slot>
                 </template>
             </YoQuery>
-            <div class="layout-container">
-                <div class="yo-grid-toolbar" v-if="slots.toolbar">
+            <div class="yo-grid__body">
+                <div class="yo-grid__toolbar" v-if="slots.toolbar">
                     <slot name="toolbar"></slot>
                 </div>
-                <div class="yo-grid-tabs" v-if="tabsProps.prop && tabsProps.config.length > 0">
+                <div class="yo-grid__tabs" v-if="tabsProps.prop && tabsProps.config.length > 0">
                     <ElTabs v-model="activeTab" @tab-change="handleTabChange">
                         <ElTabPane v-for="item in tabsProps.config" :key="item.value" :label="item.label"
                             :name="item.value" />
@@ -338,25 +338,25 @@ defineExpose({
     width: 100%;
     background-color: #fff;
 
-    .query-info {
+    .yo-grid__query {
         margin-bottom: 0;
         padding-bottom: 0;
     }
 }
 
-.layout-container {
+.yo-grid__body {
     padding-left: 20px;
     padding-right: 20px;
 }
 
-.yo-grid-toolbar {
+.yo-grid__toolbar {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-bottom: 12px;
 }
 
-.yo-grid-tabs {
+.yo-grid__tabs {
     margin-bottom: 20px;
 
     :deep(.ep-tabs__nav-wrap) {

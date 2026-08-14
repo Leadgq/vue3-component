@@ -1,33 +1,33 @@
 <template>
     <div class="yo-query" :style="gridStyle">
-        <YoTitle v-if="title" :content="title" class="title"></YoTitle>
-        <div class="plus-flex search flex-end align-center" :class="{ isActive: isShowSuperSearchArea }">
+        <YoTitle v-if="title" :content="title" class="yo-query__title"></YoTitle>
+        <div class="yo-query__search plus-flex flex-end align-center" :class="{ 'is-active': isShowSuperSearchArea }">
             <YoSearch v-model="model[quickSearchKey]" :width="'386px'" :placeholder="t('query.quickSearch')" v-if="!isShowSuperSearchArea"
                 @search="quickSearch"></YoSearch>
             <YoSearch :isSearchModel="false" :direction="isShowSuperSearchArea ? 'up' : 'down'" :button-type="'default'"
-                class="super-search" @advancedSearch="advancedSearch">
+                class="yo-query__advanced" @advancedSearch="advancedSearch">
                 {{ isShowSuperSearchArea ? t('query.collapse') : t('search.advanced') }}
             </YoSearch>
 
             <!-- 字段设置 (仅在高级搜索模式下显示) -->
-            <el-popover placement="bottom-end" :width="210" trigger="click" popper-class="yo-table-setting-popover"
+            <el-popover placement="bottom-end" :width="210" trigger="click" popper-class="yo-setting-popover"
                 v-if="showSetting && isShowSuperSearchArea" :persistent="false">
                 <template #reference>
-                    <el-icon class="setting-icon cursor-pointer">
+                    <el-icon class="yo-query__setting-icon cursor-pointer">
                         <Menu />
                     </el-icon>
                 </template>
-                <div class="setting-content">
-                    <div class="plus-flex align-center setting-title">
-                        <span class="tips">{{ t('query.fieldSetting') }}</span>
-                        <el-icon class="pointer cursor-pointer" style="margin-left: 8px;" @click="resetFields"
+                <div class="yo-setting-popover__content">
+                    <div class="yo-setting-popover__title plus-flex align-center">
+                        <span class="yo-setting-popover__tips">{{ t('query.fieldSetting') }}</span>
+                        <el-icon class="yo-setting-popover__reset cursor-pointer" style="margin-left: 8px;" @click="resetFields"
                             :title="t('query.resetFields')">
                             <Refresh />
                         </el-icon>
                     </div>
-                    <div class="setting-list">
+                    <div class="yo-setting-popover__list">
                         <el-checkbox-group v-model="visibleKeys">
-                            <div v-for="item in config" :key="item.prop" class="setting-item">
+                            <div v-for="item in config" :key="item.prop" class="yo-setting-popover__item">
                                 <el-checkbox :label="item.prop">
                                     {{ item.label }}
                                 </el-checkbox>
@@ -37,17 +37,17 @@
                 </div>
             </el-popover>
         </div>
-        <el-form v-bind="formAttrs" :model="model" class="yo-query-form" v-if="isShowSuperSearchArea">
+        <el-form v-bind="formAttrs" :model="model" class="yo-query__form" v-if="isShowSuperSearchArea">
             <template v-for="item in visibleConfig" :key="item.prop">
                 <el-form-item v-bind="item.formItemProps || {}" :label="item.label" :prop="item.prop"
                     :label-width="item.labelWidth" :style="{
                         gridColumn: `span ${item.span || 1}`,
                         '--query-label-gap': item.space ? (typeof item.space === 'number' ? `${item.space}px` : item.space) : '12px'
-                    }" class="plus-flex align-center ">
+                    }" class="plus-flex align-center">
                     <!-- 1. 插槽支持 (最高优先级) -->
                     <slot v-if="item.isSlot" :name="item.prop" :item="item" :model="model"></slot>
                     <!-- 2.嵌套渲染 -->
-                    <div v-else-if="item.children" class="yo-query-composite">
+                    <div v-else-if="item.children" class="yo-query__composite">
                         <template v-for="child in item.children" :key="child.prop">
                             <!-- 在嵌套模型下使用自定义 -->
                             <slot v-if="child.isSlot" :name="child.prop" :item="child" :model="model"></slot>
@@ -67,7 +67,7 @@
         </el-form>
 
         <!-- 确认和重置 -->
-        <div class="plus-flex align-center footer" :class="{
+        <div class="yo-query__footer plus-flex align-center" :class="{
             'flex-end': btnPostion === 'end',
             'flex-start': btnPostion === 'start',
             'justify-center': btnPostion === 'center'
@@ -246,22 +246,21 @@ $space: 20px;
     padding: $space;
     margin-bottom: $space;
 
-    .title {
+    .yo-query__title {
         margin-bottom: 17px;
     }
 
-    .search {
-
-        &.isActive {
+    .yo-query__search {
+        &.is-active {
             margin-bottom: 24px;
         }
     }
 
-    .super-search {
+    .yo-query__advanced {
         margin-left: $space;
     }
 
-    .setting-icon {
+    .yo-query__setting-icon {
         margin-left: 15px;
         color: #9a9a9a;
         font-size: 26px;
@@ -272,12 +271,12 @@ $space: 20px;
         }
     }
 
-    .footer {
+    .yo-query__footer {
         margin-top: $space;
     }
 }
 
-.yo-query-form {
+.yo-query__form {
     display: grid;
     grid-template-columns: repeat(var(--query-cols), 1fr);
     gap: var(--query-y-gap) var(--query-x-gap);
@@ -286,7 +285,7 @@ $space: 20px;
     box-sizing: border-box;
 }
 
-.yo-query-composite {
+.yo-query__composite {
     display: flex;
     gap: 8px;
     width: 100%;

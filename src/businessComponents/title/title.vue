@@ -1,7 +1,7 @@
 <template>
     <div class="yo-title plus-flex align-center">
-        <div class="yo-title plus-flex align-center" :class="`yo-title-level-${level}`">
-            <span class="title-flag"></span>
+        <div class="yo-title__heading plus-flex align-center" :class="`yo-title--level-${level}`">
+            <span class="yo-title__flag"></span>
             {{ content }}
         </div>
         <slot name="second"></slot>

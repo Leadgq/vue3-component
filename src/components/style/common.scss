@@ -1,3 +1,5 @@
+// 全局工具类（布局用，不属于某个组件的 BEM）
+// 组件 class 规范：yo-{block} / yo-{block}__{element} / yo-{block}--{modifier} / is-{state}
 .plus-flex {
     display: flex;
 }
@@ -10,8 +12,16 @@
     justify-content: center;
 }
 
+.flex-start {
+    justify-content: flex-start;
+}
+
 .flex-end {
     justify-content: flex-end;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
 }
 
 .cursor-pointer {

@@ -1,15 +1,15 @@
 <template>
-  <div class="yo-img-plus">
+  <div class="yo-img">
     <!-- 列表模式 -->
     <template v-if="fileList.length > 0 && type === 1">
-      <div v-for="file in fileList" :key="file.id" class="yo-file-item" @click.stop="handlePreview(file)">
-        <img class="file-icon-img" :src="getFileIcon(file)" alt="icon" />
-        <div class="file-info">
-          <span class="file-name" :title="file.name">{{ file.name }}</span>
-          <span v-if="file.filesize || file.size || file.length" class="file-size">{{ formatSize(file.filesize ||
+      <div v-for="file in fileList" :key="file.id" class="yo-img__item" @click.stop="handlePreview(file)">
+        <img class="yo-img__icon" :src="getFileIcon(file)" alt="icon" />
+        <div class="yo-img__info">
+          <span class="yo-img__name" :title="file.name">{{ file.name }}</span>
+          <span v-if="file.filesize || file.size || file.length" class="yo-img__size">{{ formatSize(file.filesize ||
             file.size || file.length) }}</span>
         </div>
-        <div class="file-actions">
+        <div class="yo-img__actions">
           <el-link v-if="canPreview(file)" type="success" :underline="false"
             @click.stop="handlePreview(file)">{{ t('common.preview') }}</el-link>
           <el-link v-if="isVideoFile(file)" type="success" :underline="false"
@@ -21,13 +21,13 @@
 
     <!-- 网格模式 -->
     <template v-if="fileList.length > 0 && type === 2">
-      <div class="yo-img-grid">
+      <div class="yo-img__grid">
         <template v-for="(file, index) in fileList" :key="file.id || index">
           <el-image v-if="isImgType(file.type)" :src="file.url"
             :style="{ width: props.width, height: props.height, margin: '4px', cursor: 'pointer' }" :fit="fit"
             @click.stop="handlePreview(file, true)">
             <template #error>
-              <div class="image-error">
+              <div class="yo-img__error">
                 <el-image v-if="defaultUrl" :src="defaultUrl" />
                 <el-icon v-else>
                   <Picture />
@@ -35,11 +35,11 @@
               </div>
             </template>
           </el-image>
-          <div v-else class="grid-non-image-item" :style="{ width: props.width, height: props.height, margin: '4px' }"
+          <div v-else class="yo-img__grid-item" :style="{ width: props.width, height: props.height, margin: '4px' }"
             @click.stop="isVideoFile(file) ? playVideo(file) : handlePreview(file)">
-            <img class="grid-file-icon" :src="getFileIcon(file)" alt="icon" />
-            <span class="grid-file-name" :title="file.name">{{ file.name }}</span>
-            <div v-if="isVideoFile(file)" class="grid-play-icon">
+            <img class="yo-img__grid-icon" :src="getFileIcon(file)" alt="icon" />
+            <span class="yo-img__grid-name" :title="file.name">{{ file.name }}</span>
+            <div v-if="isVideoFile(file)" class="yo-img__play">
               <el-icon>
                 <CaretRight />
               </el-icon>
@@ -50,9 +50,9 @@
     </template>
 
     <!-- 暂无数据 -->
-    <div v-if="fileList.length === 0" class="yo-no-file">
+    <div v-if="fileList.length === 0" class="yo-img__empty">
       <el-image v-if="defaultUrl" :src="defaultUrl" />
-      <div v-else class="no-file-text">
+      <div v-else class="yo-img__empty-text">
         <el-icon>
           <Warning />
         </el-icon> {{ t('empty.noFile') }}
@@ -66,7 +66,7 @@
     <!-- 视频播放对话框 -->
     <el-dialog v-model="videoDialogVisible" :title="currentVideo?.name || t('file.playVideo')" width="800px" append-to-body
       destroy-on-close @opened="handleVideoDialogOpened" @close="handleVideoDialogClose">
-      <div id="mse" class="video-player-container"></div>
+      <div id="mse" class="yo-img__player"></div>
     </el-dialog>
   </div>
 </template>
@@ -288,9 +288,9 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-.yo-img-plus {
+.yo-img {
   width: 100%;
-  .yo-file-item {
+  .yo-img__item {
   display: flex;
   align-items: center;
   padding: 10px 12px;
@@ -304,21 +304,21 @@ defineExpose({
     background-color: #e4e7ed;
   }
 
-  .file-icon-img {
+  .yo-img__icon {
     width: 28px;
     height: 34px;
     margin-right: 12px;
     flex-shrink: 0;
   }
 
-  .file-info {
+  .yo-img__info {
     display: flex;
     flex-direction: column;
     flex: 1;
     overflow: hidden;
   }
 
-  .file-name {
+  .yo-img__name {
     font-size: 14px;
     color: #535559;
     overflow: hidden;
@@ -326,25 +326,25 @@ defineExpose({
     text-overflow: ellipsis;
   }
 
-  .file-size {
+  .yo-img__size {
     font-size: 12px;
     color: #A8A9AB;
     margin-top: 4px;
   }
 
-  .file-actions {
+  .yo-img__actions {
     display: flex;
     gap: 18px;
     margin-left: 16px;
   }
 }
 
-.yo-img-grid {
+.yo-img__grid {
   display: flex;
   flex-wrap: wrap;
 }
 
-.grid-non-image-item {
+.yo-img__grid-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -361,13 +361,13 @@ defineExpose({
     background-color: #e4e7ed;
   }
 
-  .grid-file-icon {
+  .yo-img__grid-icon {
     width: 36px;
     height: 36px;
     margin-bottom: 8px;
   }
 
-  .grid-file-name {
+  .yo-img__grid-name {
     font-size: 12px;
     color: #606266;
     text-align: center;
@@ -378,7 +378,7 @@ defineExpose({
   }
 }
 
-.image-error {
+.yo-img__error {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -388,12 +388,12 @@ defineExpose({
   color: #909399;
 }
 
-.yo-no-file {
+.yo-img__empty {
   padding: 20px;
   text-align: center;
   color: #c0c4cc;
 
-  .no-file-text {
+  .yo-img__empty-text {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -401,7 +401,7 @@ defineExpose({
   }
 }
 
-.video-player-container {
+.yo-img__player {
   width: 100%;
   height: 450px;
   background-color: #000;
@@ -409,7 +409,7 @@ defineExpose({
   overflow: hidden;
 }
 
-.grid-play-icon {
+.yo-img__play {
   position: absolute;
   top: 50%;
   left: 50%;
