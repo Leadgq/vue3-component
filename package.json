@@ -19,7 +19,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "pnpm --filter yo-pc-ui-theme build && vite build",
+    "build:theme": "pnpm --filter yo-pc-ui-theme build",
+    "build:components": "vite build",
     "build:watch": "vite build --watch",
     "preview": "vite preview"
   },
@@ -39,6 +41,7 @@
   },
   "homepage": "https://github.com/Leadgq/vue3-component-library#readme",
   "dependencies": {
+    "yo-pc-ui-theme": "workspace:*",
     "@element-plus/icons-vue": "^2.3.2",
     "@vue-office/docx": "^1.6.3",
     "@vue-office/excel": "^1.7.14",

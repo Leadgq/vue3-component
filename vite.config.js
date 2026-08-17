@@ -56,11 +56,14 @@ export default defineConfig({
         id.startsWith('@vue-office/') ||
         id === 'file-saver' ||
         id === 'xgplayer' ||
-        id.startsWith('xgplayer/'),
+        id.startsWith('xgplayer/') ||
+        id === 'yo-pc-ui-theme' ||
+        id.startsWith('yo-pc-ui-theme/'),
       output: {
         globals: {
           vue: 'Vue',
-          'element-plus': 'ElementPlus'
+          'element-plus': 'ElementPlus',
+          'yo-pc-ui-theme': 'YoPcUiTheme',
         }
       }
     },

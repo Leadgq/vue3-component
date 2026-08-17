@@ -1,7 +1,3 @@
-// 导入核心组件
-import "./core";
-// 导入业务组件
-import "./businessComponents";
 // 导入基础组件
 import componentLibrary from "./components/index";
 // 导出核心方法
@@ -12,6 +8,5 @@ export * from "./businessComponents";
 export * from "./components/index";
 // 导出主题 API
 export { getTheme, setTheme, getCurrentTheme } from "./themes";
-export { setLocale, getLocale, getLocaleList, localeState, t } from "./core/i18n";
 // 导出默认值
 export default componentLibrary;

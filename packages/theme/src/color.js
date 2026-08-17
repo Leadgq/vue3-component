@@ -1,7 +1,3 @@
-/**
- * 与 Element Plus 一致：mix(white/black, base, weight%)
- * weight 为第一种颜色的占比
- */
 export function mix(hex1, hex2, weight) {
   const w = Math.min(100, Math.max(0, weight)) / 100
   const a = parseHex(hex1)
@@ -15,24 +11,20 @@ export function mix(hex1, hex2, weight) {
 
 function parseHex(hex) {
   if (!hex || typeof hex !== 'string') return null
-  let h = hex.trim().replace('#', '')
-  if (h.length === 3) h = h.split('').map((c) => c + c).join('')
-  if (h.length !== 6) return null
+  let value = hex.trim().replace('#', '')
+  if (value.length === 3) value = value.split('').map((char) => char + char).join('')
+  if (value.length !== 6) return null
   return {
-    r: parseInt(h.slice(0, 2), 16),
-    g: parseInt(h.slice(2, 4), 16),
-    b: parseInt(h.slice(4, 6), 16),
+    r: parseInt(value.slice(0, 2), 16),
+    g: parseInt(value.slice(2, 4), 16),
+    b: parseInt(value.slice(4, 6), 16),
   }
 }
 
-function toHex(n) {
-  return n.toString(16).padStart(2, '0')
+function toHex(value) {
+  return value.toString(16).padStart(2, '0')
 }
 
-/**
- * 由主色生成业务 + EP 主色相关 CSS 变量（不含 -- 前缀）
- * @param {{ primary: string, primaryDark?: string, primaryDisabled?: string }} preset
- */
 export function buildPrimaryVars({ primary, primaryDark, primaryDisabled }) {
   const dark = primaryDark || mix('#000000', primary, 20)
   const disabled = primaryDisabled || mix('#ffffff', primary, 50)

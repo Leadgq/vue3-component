@@ -1,4 +1,3 @@
-/** 活力橙 */
 export default {
   name: '活力橙',
   value: 'vitalityOrange',

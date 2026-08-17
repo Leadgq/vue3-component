@@ -1,0 +1,66 @@
+@use 'sass:color';
+@use 'sass:map';
+
+$primary: #4d6de6;
+$success: #42ba5b;
+$warning: #ed892f;
+$danger: #e85050;
+
+@function ep-light($base, $weight) {
+  @return color.mix(#ffffff, $base, $weight);
+}
+
+$colors: (
+  primary-color: $primary,
+  primary-color-dark: #2b4dcd,
+  primary-color-disabled: #adbeff,
+  success-color: $success,
+  success-color-dark: #2a9f47,
+  success-color-disabled: #abe7b8,
+  danger-color: $danger,
+  danger-color-dark: #c13237,
+  danger-color-disabled: #f6c2bd,
+  warning-color: $warning,
+  warning-color-dark: #c3651d,
+  warning-color-disabled: #f4c8a2,
+  title-color-level-1: #333,
+  title-color-level-2: $primary,
+  title-color-level-3: #989899,
+  default-disabled-text-color: #a0b1f0,
+  default-disabled-border-color: #a0b1f0,
+  default-disabled-hover-border-color: #447bfd,
+  default-radio-color: #6b7a99,
+  radio-disabled-color: #cbcfdb,
+  detail-label-color: #475166,
+  detail-disabel-input-color: #f2f3f7,
+  detail-disabel-input-text-color: #4d4d4d,
+  table-header-bg: #f5f7fb,
+  table-header-text-color: #333333,
+  table-stripe-bg: #fafafa,
+  font-size-base: 14px,
+  font-size-lg: 16px,
+);
+
+:root {
+  @each $key, $value in $colors {
+    --#{$key}: #{$value};
+  }
+
+  --ep-color-primary: #{$primary};
+  --ep-color-primary-dark-2: #{map.get($colors, primary-color-dark)};
+  --ep-color-primary-light-3: #{ep-light($primary, 30%)};
+  --ep-color-primary-light-5: #{ep-light($primary, 50%)};
+  --ep-color-primary-light-7: #{ep-light($primary, 70%)};
+  --ep-color-primary-light-8: #{ep-light($primary, 80%)};
+  --ep-color-primary-light-9: #{ep-light($primary, 90%)};
+
+  @each $name, $base in (success: $success, warning: $warning, danger: $danger) {
+    --ep-color-#{$name}: #{$base};
+    --ep-color-#{$name}-dark-2: #{map.get($colors, #{$name}-color-dark)};
+    --ep-color-#{$name}-light-3: #{ep-light($base, 30%)};
+    --ep-color-#{$name}-light-5: #{ep-light($base, 50%)};
+    --ep-color-#{$name}-light-7: #{ep-light($base, 70%)};
+    --ep-color-#{$name}-light-8: #{ep-light($base, 80%)};
+    --ep-color-#{$name}-light-9: #{ep-light($base, 90%)};
+  }
+}
